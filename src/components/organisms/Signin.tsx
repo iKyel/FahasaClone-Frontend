@@ -53,7 +53,6 @@ const Signin: React.FC<MyComponentProps> = ({ handleNav }) => {
         }
         if (name === 'userName') {
             const usernameRegex = /^[a-zA-Z0-9]{4,50}$/;
-
             newErrors.userName = usernameRegex.test(value) ? '' : 'Chỉ có thể dùng chữ thường, chữ in hoa hoặc số trong khoảng 4 đến 50 kí tự, không dùng chữ tiếng Việt';
         }
         if (name === 'password') {
@@ -71,10 +70,10 @@ const Signin: React.FC<MyComponentProps> = ({ handleNav }) => {
     const handleModal = () => {
         setIsModalOpen(false);
 
-        if (modalMessage === 'Đăng ký thành công') {
+        if (modalMessage === 'Đăng ký thành công!') {
             handleNav(true);
         }
-        else if (modalMessage === 'Tên đăng nhập đã tồn tại. Hãy dùng tên khác!') {
+        else if (modalMessage === 'UserName đã tồn tại!') {
             setErrors({
                 ...errors,
                 userName: modalMessage

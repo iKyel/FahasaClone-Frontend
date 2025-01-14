@@ -7,7 +7,7 @@ interface ContainerProps {
 
 const Layout_Customer: React.FC<ContainerProps> = ({ children }) => {
     return (
-        <div className="min-h-screen flex">
+        <div className="flex">
             <Sidebar />
             <div className='w-3/4'>
                 {children}

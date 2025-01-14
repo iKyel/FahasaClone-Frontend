@@ -1,53 +1,48 @@
-"use client";
+'use client';
 
-import React, { useState } from 'react'
+import { useCategory } from '@/contexts/AppContext';
+import { observer } from 'mobx-react-lite';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
-const NavBar_Desktop = () => {
-    const categories = [
-        {
-            id: '1',
-            name: "Sách Trong Nước",
-            groupNames: ["Văn học", "Kinh tế", "Tâm lý - Kĩ năng sống", "Nuôi dạy con"],
-            groups: [
-                ["Văn học A", "Văn học B", "Văn học C", "Văn học D", "Xem tất cả"],
-                ["Kinh tế A", "Kinh tế B", "Kinh tế C", "Kinh tế D", "Xem tất cả"],
-                ["Tâm lý A", "Tâm lý B", "Tâm lý C", "Tâm lý D", "Xem tất cả"],
-                ["Nuôi dạy A", "Nuôi dạy B", "Nuôi dạy C", "Nuôi dạy D", "Xem tất cả"],
-            ],
-        },
-        {
-            id: '2',
-            name: "Laptop",
-            groupNames: ["MacBook", "Dell", "HP", "Lenovo"],
-            groups: [
-                ["MacBook A", "MacBook B", "MacBook C", "MacBook D", "Xem tất cả"],
-                ["Dell A", "Dell B", "Dell C", "Dell D", "Xem tất cả"],
-                ["HP A", "HP B", "HP C", "HP D", "Xem tất cả"],
-                ["Lenovo A", "Lenovo B", "Lenovo C", "Lenovo D", "Xem tất cả"],
-            ],
-        },
-    ];
+const NavBar_Desktop = observer(() => {
+    const router = useRouter();
+    const categoryStore = useCategory();
+
+    const [isClient, setIsClient] = useState(false);
+    useEffect(() => {
+        setIsClient(true);
+    })
 
     const [isHovered, setIsHovered] = useState(false);
-    const [activeCategory, setActiveCategory] = useState<string | null>(categories[0].id);
+    const [activeCategory, setActiveCategory] = useState<string | null>('');
 
+    // handleMouseEnter
     const handleMouseEnter = () => {
         setIsHovered(true);
-        setActiveCategory('1');
-    }
+        setActiveCategory(categoryStore?.categories?.[0]?._id || '');
+    };
+
+    // handleMouseLeave
     const handleMouseLeave = () => {
         setIsHovered(false);
         setActiveCategory(null);
     };
 
+    // handleCategoryHover
     const handleCategoryHover = (categoryId: string) => {
         setActiveCategory(categoryId);
     };
 
+    const handleClick = (id: string) => {
+        setIsHovered(false);
+        router.push(`/products?category=${id}`)
+    }
 
     return (
-        <div className='hidden md:block'>
-            <div className="flex justify-center items-center pl-16 py-3"
+        <div className="hidden md:block">
+            <div
+                className="flex justify-center items-center pl-16 py-3"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
@@ -59,60 +54,70 @@ const NavBar_Desktop = () => {
                 </span>
 
                 {/* Danh mục sản phẩm */}
-                {isHovered && (
-                    <div className="absolute top-16 right-0 w-full h-screen p-2 bg-white border rounded">
+                {isHovered && isClient && (
+                    <div className="absolute top-16 right-0 z-50 w-full p-2 bg-white border rounded shadow-lg">
                         <div className="flex">
                             {/* Danh sách danh mục bên trái */}
                             <div className="w-1/4 border-r p-2">
-                                <h3 className="text-2xl font-bold opacity-60 p-4">Danh mục sản phẩm</h3>
+                                <h3 className="text-2xl font-bold opacity-60 p-2 pb-4">Danh mục sản phẩm</h3>
                                 <ul>
-                                    {categories.map((category) => (
+                                    {categoryStore?.categories?.map((category, index) => (
                                         <li
-                                            key={category.id}
-                                            className={`p-4 cursor-pointer rounded-lg hover:bg-gray-200 font-bold ${activeCategory === category.id ? "bg-gray-200" : ""}`}
-                                            onMouseEnter={() => handleCategoryHover(category.id)}
+                                            key={index}
+                                            className={`p-4 cursor-pointer rounded-lg hover:bg-gray-200 font-bold ${activeCategory === category._id ? 'bg-gray-200' : ''
+                                                }`}
+                                            onMouseEnter={() => handleCategoryHover(category._id)}
+                                            onClick={() => { handleClick(category._id) }}
                                         >
-                                            {category.name}
+                                            {category.ten}
                                         </li>
                                     ))}
                                 </ul>
                             </div>
 
                             {/* Danh sách nhóm sản phẩm bên phải */}
-                            <div className="w-3/4 p-2">
-                                {categories.map((category) =>
-                                    activeCategory === category.id && (
-                                        <div key={category.id}>
+                            <div className="w-3/4 pt-4 pl-6 text-black">
+                                {categoryStore?.categories?.map((category, index) =>
+                                    activeCategory === category._id && (
+                                        <div key={index}>
                                             <div>
-                                                <h3 className="text-2xl font-bold p-4">{category.name}</h3>
+                                                <h3 className="text-2xl font-bold mb-4">{category.ten}</h3>
                                             </div>
-
-                                            <div className="grid grid-cols-4 gap-4">
-                                                {category.groupNames.map((groupName, index) => (
-                                                    <div key={index}>
-                                                        <h3 className="font-semibold">{groupName}</h3>
+                                            <div className="grid grid-cols-4 gap-8 text-sm">
+                                                {category.children?.map((category2, index) => index < 8 && (
+                                                    <div
+                                                        key={index}
+                                                        className="cursor-pointer"
+                                                    >
+                                                        <h3 className="font-semibold mb-2" onClick={() => { handleClick(category2._id) }}>{category2.ten}</h3>
                                                         <ul>
-                                                            {category.groups[index].map(
-                                                                (item, idx) => (
-                                                                    <li key={idx} className="cursor-pointer hover:bg-gray-200">
-                                                                        {item}
-                                                                    </li>
-                                                                )
+                                                            {category2.children?.map((category3, index) => index < 5 && (
+                                                                <li
+                                                                    key={index}
+                                                                    className="cursor-pointer hover:text-yellow-600 text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap"
+                                                                    onClick={() => { handleClick(category3._id) }}
+                                                                >
+                                                                    {category3.ten}
+                                                                </li>
+                                                            ))}
+                                                            {category2.children && category2.children.length > 5 && (
+                                                                <li className='cursor-pointer text-blue-500'>
+                                                                    Xem tất cả
+                                                                </li>
                                                             )}
                                                         </ul>
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
-                                    )
-                                )}
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
                 )}
             </div>
-        </div>
-    )
-}
+        </div>);
+});
 
-export default NavBar_Desktop
+export default NavBar_Desktop;

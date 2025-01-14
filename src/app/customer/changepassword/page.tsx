@@ -85,7 +85,7 @@ const ChangePassword = () => {
             <h3 className="text-lg">Đổi mật khẩu</h3>
             <form onSubmit={handleSubmit}>
                 <Input_And_Label_Profile
-                    type='text'
+                    type='password'
                     text='Mật khẩu cũ'
                     placeholder='Nhập mật khẩu cũ'
                     id='oldPassword'
@@ -95,7 +95,7 @@ const ChangePassword = () => {
                 {errors.oldPassword && (<p className="text-red-700 text-sm mt-1 text-center">{errors.oldPassword}</p>)}
 
                 <Input_And_Label_Profile
-                    type='text'
+                    type='password'
                     text='Mật khẩu mới'
                     placeholder='Nhập mật khẩu mới'
                     id='newPassword'
@@ -105,7 +105,7 @@ const ChangePassword = () => {
                 {errors.newPassword && (<p className="text-red-700 text-sm mt-1 text-center">{errors.newPassword}</p>)}
 
                 <Input_And_Label_Profile
-                    type='text'
+                    type='password'
                     text='Xác nhận mật khẩu'
                     placeholder='Xác nhận mật khẩu mới'
                     id='confirmNewPassword'

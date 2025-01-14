@@ -22,8 +22,8 @@ const Header = () => {
                         </div>
 
                         <div className="w-1/5 flex justify-around items-center py-2 pl-12">
-                            <Button_Header src="/images/header/ico_cart_gray.svg" text='Giỏ Hàng' style='mx-auto' />
-                            <Button_Header src='/images/header/ico_account_gray.svg' text='Khách Hàng' style='mx-auto' />
+                            <Button_Header src="/images/header/ico_cart_gray.svg" text='Giỏ Hàng' style='mx-auto' id='cart' />
+                            <Button_Header src='/images/header/ico_account_gray.svg' text='Khách Hàng' style='mx-auto' id='account' />
                         </div>
                     </div>
 
@@ -40,8 +40,8 @@ const Header = () => {
                     </div>
 
                     <div className="w-1/6 flex justify-around items-center">
-                        <Button_Header src="/images/header/ico_shopping_cart_white.svg" text='' style='w-8 mx-auto px-1' />
-                        <Button_Header src='/images/header/ico_thongtintk.svg' text='' style='w-7 mx-auto px-1' />
+                        <Button_Header src="/images/header/ico_shopping_cart_white.svg" text='' style='w-8 mx-auto px-1' id='cart' />
+                        <Button_Header src='/images/header/ico_thongtintk.svg' text='' style='w-7 mx-auto px-1' id='account' />
                     </div>
                 </div>
             </div>
