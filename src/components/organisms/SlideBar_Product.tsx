@@ -90,11 +90,13 @@ const SlideBar_Product: React.FC<MyComponentProps> =
                         selectedValue={selectedPrice}
                         onClick={handleFilterPrice}
                     />
-                    <Supplier_Filter
-                        filter={suppliers}
-                        selectedValue={selectedSupplier}
-                        onClick={handleFilterSupplier}
-                    />
+                    {suppliers && suppliers.length > 0 &&
+                        <Supplier_Filter
+                            filter={suppliers}
+                            selectedValue={selectedSupplier}
+                            onClick={handleFilterSupplier}
+                        />
+                    }
                     {features &&
                         features.map((feature, index) => (
                             <Feature_Filter

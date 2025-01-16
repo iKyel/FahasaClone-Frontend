@@ -91,13 +91,19 @@ class UserStore {
 
     async logout() {
         try {
-            destroyCookie(null, 'token');
-            runInAction(() => {
-                this.user = null;
-            })
-            return { message: "Đăng xuất thành công" };
+            const response = await api.get('/api/account/logout');
+            if (response.data.message) {
+                destroyCookie(null, 'token');
+                runInAction(() => {
+                    this.user = null;
+                })
+                return { message: "Đăng xuất thành công" };
+            }
         } catch (error) {
             console.log("Lỗi đăng xuất ", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
         }
     }
 
@@ -110,7 +116,6 @@ class UserStore {
                     runInAction(() => {
                         this.user = response.data.user;
                     })
-
                 }
                 return response.data;
             }

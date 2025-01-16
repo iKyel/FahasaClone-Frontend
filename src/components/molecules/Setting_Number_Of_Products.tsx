@@ -1,27 +1,42 @@
 'use client';
 
 import React, { useState } from 'react'
+interface MyComponentProps {
+    handleChange: (numberOfProduct: number) => void;
+}
 
-const Setting_Number_Of_Products = () => {
-    const [numOfProducts, setNumOfProducts] = useState('1');
+
+const Setting_Number_Of_Products: React.FC<MyComponentProps> = ({ handleChange }) => {
+    const [num, setNum] = useState('1');
 
     const minusNumOfProducts = () => {
-        if (parseInt(numOfProducts) > 1) setNumOfProducts((parseInt(numOfProducts) - 1).toString());
+        if (parseInt(num) > 1) {
+            setNum((parseInt(num) - 1).toString());
+            handleChange(parseInt(num) - 1);
+        }
     }
     const plusNumOfProducts = () => {
-        if (parseInt(numOfProducts) < 999) setNumOfProducts((parseInt(numOfProducts) + 1).toString());
+        if (parseInt(num) < 999) {
+            setNum((parseInt(num) + 1).toString());
+            handleChange(parseInt(num) + 1);
+        }
     };
 
     //handleQuantityChange
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
         if ((inputValue !== '' && parseInt(inputValue) <= 999 && /^\d*$/.test(inputValue)) || inputValue === '') {
-            setNumOfProducts(inputValue);
+            setNum(inputValue);
+            handleChange(parseInt(inputValue));
+        }
+        else if (inputValue === '') {
+            setNum(inputValue);
         }
     };
     const handleBlur = () => {
-        if (numOfProducts === "") {
-            setNumOfProducts("1");
+        if (num === '') {
+            setNum('1');
+            handleChange(1);
         }
     }
 
@@ -37,7 +52,7 @@ const Setting_Number_Of_Products = () => {
                         type="text"
                         id='numberOfProduct'
                         className="text-center w-12 font-bold focus:outline-none focus:ring-0"
-                        value={numOfProducts}
+                        value={num}
                         onChange={handleQuantityChange}
                         onBlur={handleBlur}
                     />

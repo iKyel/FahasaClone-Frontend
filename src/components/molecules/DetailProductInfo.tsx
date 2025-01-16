@@ -27,7 +27,7 @@ const DetailProductInfo = observer(() => {
                         {featureStore?.featureValue?.map((item, index) => (
                             <DetailProductInfoProps
                                 key={index}
-                                featureName={item.tenDT}
+                                featureName={item.ten}
                                 value={item.giaTri}
                             />
                         ))}

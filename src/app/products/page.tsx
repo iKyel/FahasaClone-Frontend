@@ -81,7 +81,6 @@ const Products = observer(() => {
                 ...(selectedPage && { pageNum: selectedPage }),
                 ...featuresQuery,
             };
-            await featureStore?.getFeatureListValueByCategoryId('677fc1e802c44b15ec070958');
             const result = await productStore?.getProducts(query);
             if (result && result.totalPage) {
                 setTotalPage(result.totalPage);

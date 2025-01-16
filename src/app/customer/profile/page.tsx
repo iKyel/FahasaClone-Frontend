@@ -12,6 +12,9 @@ const ProfilePage = observer(() => {
     const userStore = useUser();
 
     let updatedList: UpdatedList = {}
+
+    const [gioiTinh, setGioiTinh] = useState(userStore?.user?.gioiTinh || 'Nam')
+
     const oldForm = {
         hoDem: userStore?.user?.hoDem || '',
         ten: userStore?.user?.ten || '',
@@ -26,7 +29,7 @@ const ProfilePage = observer(() => {
         ten: userStore?.user?.ten || '',
         sdt: userStore?.user?.sdt || '',
         email: userStore?.user?.email || '',
-        gioiTinh: userStore?.user?.gioiTinh || '',
+        gioiTinh: userStore?.user?.gioiTinh || 'Nam',
         ngaySinh: userStore?.user?.ngaySinh || ''
     });
 
@@ -35,6 +38,11 @@ const ProfilePage = observer(() => {
         ten: '',
         sdt: '',
     });
+
+    const [isClient, setIsClient] = useState(false);
+    useEffect(() => {
+        setIsClient(true);
+    })
 
     //Modal
     const [modalMessage, setModalMessage] = useState('Có lỗi xảy ra');
@@ -92,7 +100,6 @@ const ProfilePage = observer(() => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!hasErrors) {
-            console.log('ok');
             const result = await userStore?.updateUser(updatedList);
             if (result && result.message) {
                 setModalMessage(result.message);
@@ -153,18 +160,46 @@ const ProfilePage = observer(() => {
                         onChange={handleChange}
                     />
 
+                    <div className="mt-4 mb-2 text-sm flex items-center">
+                        <label className="w-1/5 block pl-1 font-medium">
+                            Giới tính
+                        </label>
+                        <div className="w-2/3 flex items-center">
+                            <div className="pr-4 py-2 flex items-center">
+                                <input
+                                    type='radio'
+                                    id='male'
+                                    name="gioiTinh"
+                                    checked={gioiTinh === 'Nam'}
+                                    value='Nam'
+                                    onChange={(e) => {
+                                        setForm({ ...form, gioiTinh: e.target.value });
+                                        setGioiTinh(e.target.value);
+                                    }}
+                                    className="w-5 h-5 mr-2"
+                                />
+                                <label htmlFor="male">Nam</label>
+                            </div>
+                            <div className="px-4 flex items-center">
+                                <input
+                                    type='radio'
+                                    id='female'
+                                    name="gioiTinh"
+                                    checked={gioiTinh === 'Nữ'}
+                                    value='Nữ'
+                                    onChange={(e) => {
+                                        setForm({ ...form, gioiTinh: e.target.value });
+                                        setGioiTinh(e.target.value);
+                                    }}
+                                    className="w-5 h-5 mr-2"
+                                />
+                                <label htmlFor="female">Nữ</label>
+                            </div>
+                        </div>
+                    </div>
 
                     <Input_And_Label_Profile
-                        type='text'
-                        text='Giới tính'
-                        placeholder='Nhập giới tính'
-                        id='gioiTinh'
-                        value={form.gioiTinh}
-                        onChange={handleChange}
-                    />
-
-                    <Input_And_Label_Profile
-                        type='text'
+                        type='date'
                         text='Ngày sinh'
                         placeholder='Nhập ngày sinh'
                         id='ngaySinh'
@@ -172,10 +207,12 @@ const ProfilePage = observer(() => {
                         onChange={handleChange}
                     />
 
-                    <Button_Submit_Form
+                    {isClient && <Button_Submit_Form
                         text='Lưu thay đổi'
                         hasErrors={hasErrors || compareFields(oldForm, form)}
                     />
+                    }
+
                     <Modal
                         isOpen={isModalOpen}
                         modalMessage={modalMessage}

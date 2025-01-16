@@ -9,7 +9,7 @@ const Button_Submit_Form: React.FC<MyComponentProps> = ({ text, hasErrors }) => 
         <div className="flex justify-center mt-6">
             <button
                 type="submit"
-                className={`w-64 py-2 px-4 rounded-md bg-red-700 text-white font-semibold text-sm ${hasErrors ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`w-64 py-2 px-4 rounded-md text-white font-semibold text-sm ${hasErrors ? 'bg-red-400 cursor-not-allowed' : 'bg-red-700'}`}
             >
                 {text}
             </button>

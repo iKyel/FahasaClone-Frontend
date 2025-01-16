@@ -1,12 +1,14 @@
 'use client';
 
+import Modal from "@/components/atoms/Modal";
 import DetailProductDescription from "@/components/molecules/DetailProductDescription";
 import DetailProductInfo from "@/components/molecules/DetailProductInfo";
 import Setting_Number_Of_Products from "@/components/molecules/Setting_Number_Of_Products";
 import Product_List_DetailProduct from "@/components/organisms/Product_List_DetailProduct";
-import { useFeature, useProduct } from "@/contexts/AppContext";
+import { useFeature, useOrder, useProduct } from "@/contexts/AppContext";
 import { observer } from "mobx-react-lite";
-import React, { use, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import React, { use, useEffect, useState } from "react";
 
 interface ProductDetailProps {
     params: Promise<{
@@ -15,9 +17,16 @@ interface ProductDetailProps {
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
+    const router = useRouter();
     const productStore = useProduct();
     const featureStore = useFeature();
+    const orderStore = useOrder();
     const { id } = use(params);
+
+    const [numberOfProduct, setNumberOfProduct] = useState(1);
+
+    const [modalMessage, setModalMessage] = useState('Có lỗi xảy ra');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,9 +37,24 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
         fetchData();
     }, [productStore])
 
-    const giaGoc = productStore?.productDetail
-        ? Math.round(productStore?.productDetail?.giaBan / (1 - (productStore?.productDetail?.khuyenMai ? productStore?.productDetail?.khuyenMai : 0) / 100))
-        : 0;
+    const handleAddCart = async () => {
+        const result = await orderStore?.addProductToCart(id, numberOfProduct);
+        if (result && result.message) {
+            setModalMessage(result.message);
+            setIsModalOpen(true);
+        }
+    }
+
+    const handleBuyNow = async () => {
+        const result = await orderStore?.addProductToCart(id, numberOfProduct);
+        if (result && result.message) {
+            router.push('/cart');
+        }
+    }
+
+    const handleModal = () => {
+        setIsModalOpen(false);
+    }
 
     return (
         <div>
@@ -46,10 +70,16 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                     </div>
 
                     <div className="flex w-full py-4">
-                        <button className="w-1/2 mr-2 px-4 py-2 rounded-lg bg-white border-2 border-red-700 text-red-700">
+                        <button
+                            onClick={handleAddCart}
+                            className="w-1/2 mr-2 px-4 py-2 rounded-lg bg-white border-2 border-red-700 text-red-700"
+                        >
                             Thêm vào giỏ hàng
                         </button>
-                        <button className="w-1/2 ml-2 px-4 py-2 rounded-lg bg-red-700 text-white">
+                        <button
+                            onClick={handleBuyNow}
+                            className="w-1/2 ml-2 px-4 py-2 rounded-lg bg-red-700 text-white"
+                        >
                             Mua ngay
                         </button>
                     </div>
@@ -80,10 +110,10 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                             )}
 
                             {featureStore?.featureValue?.map((feature, index) =>
-                                ['Tác giả', 'Nhà xuất bản', 'Hình thức', 'Thương hiệu', 'Xuất xứ', 'Độ tuổi'].includes(feature.tenDT)
+                                ['Tác giả', 'Nhà xuất bản', 'Hình thức', 'Thương hiệu', 'Xuất xứ', 'Độ tuổi'].includes(feature.ten)
                                 && (
                                     <div key={index} className="flex">
-                                        <p className="text-gray-800">{feature.tenDT}:</p>
+                                        <p className="text-gray-800">{feature.ten}:</p>
                                         <p className="text-gray-900 font-bold ml-2">{feature.giaTri}</p>
                                     </div>
                                 ))
@@ -94,15 +124,15 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                         {/* Giá sản phẩm */}
                         <div className="flex items-center gap-4">
                             <p className="text-3xl font-bold text-red-700">
-                                {productStore?.productDetail && productStore.productDetail.giaBan > 0 ? productStore?.productDetail?.giaBan.toLocaleString() : 0}₫
+                                {productStore?.productDetail?.giaBan ? productStore?.productDetail?.giaBan.toLocaleString() : 0}₫
                             </p>
-                            {productStore?.productDetail?.khuyenMai && (
+                            {productStore?.productDetail && productStore.productDetail.khuyenMai > 0 && (
                                 <>
                                     <p className="text-base text-gray-500 line-through">
-                                        {giaGoc > 0 ? giaGoc.toLocaleString() + '₫' : ''}
+                                        {productStore.productDetail.giaBan.toLocaleString() + '₫'}
                                     </p>
                                     <p className="px-1 bg-red-700 rounded text-sm text-white font-bold">
-                                        -{productStore.productDetail.khuyenMai > 0 ? productStore.productDetail.khuyenMai + '%' : ''}
+                                        -{productStore.productDetail.khuyenMai + '%'}
                                     </p>
                                 </>
                             )}
@@ -111,8 +141,10 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                         </div>
                     </div>
 
-                    {/* Số lượng và nút Thêm vào giỏ */}
-                    <Setting_Number_Of_Products />
+                    {/* Số lượng */}
+                    <Setting_Number_Of_Products
+                        handleChange={(numberOfProduct) => setNumberOfProduct(numberOfProduct)}
+                    />
 
                     {/* Thông tin chi tiết sản phẩm*/}
                     <DetailProductInfo />
@@ -127,6 +159,11 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                     <Product_List_DetailProduct products={productStore?.products?.filter((product) => product._id !== id).slice(0, 4)} />
                 }
             </div>
+            <Modal
+                isOpen={isModalOpen}
+                modalMessage={modalMessage}
+                onClose={handleModal}
+            />
         </div>
     );
 });

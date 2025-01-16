@@ -13,10 +13,10 @@ interface MyComponentProps {
 }
 
 const Button_Header: React.FC<MyComponentProps> = observer(({ src, text, style, id }) => {
-    const [isClient, setIsClient] = useState(false);
     const router = useRouter();
     const userStore = useUser();
 
+    const [isClient, setIsClient] = useState(false);
     useEffect(() => {
         setIsClient(true);
     }, []);

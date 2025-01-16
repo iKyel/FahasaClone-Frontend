@@ -62,10 +62,16 @@ class ProductStore {
         try {
             const response = await axiosInstance.get('/api/product/getProducts', { params: query });
 
-            if (response.data && response.data.products) {
-                runInAction(() => {
-                    this.products = response.data.products;
-                });
+            if (response.data) {
+                if (response.data.products) {
+                    runInAction(() => {
+                        this.products = response.data.products;
+                    });
+                }
+
+                if (response.data.features || response.data.supplier) {
+                    featureStore.getFeatureListValue(response.data.features, response.data.supplier);
+                }
             }
         } catch (error) {
             // console.error("Lỗi khi lấy danh sách sản phẩm: ", error);

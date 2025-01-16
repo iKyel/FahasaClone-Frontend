@@ -1,0 +1,49 @@
+import api from "@/utils/axios_catch_error_token";
+import axiosInstance from "@/utils/axiosInstance";
+import axios from "axios";
+import { makeAutoObservable, runInAction } from "mobx";
+
+export interface IOrderDetail {
+    _id: string;
+    sanPhamId: string;
+    tenSP: string;
+    giaBan: number;
+    khuyenMai: number;
+    soLuongTon: number;
+    imageUrl: string;
+    soLuong: number;
+    thanhTien: number;
+    daChon: boolean;
+}
+
+class OrderDetailStore {
+    cartDetail: IOrderDetail[] | null = null;
+
+    constructor() {
+        makeAutoObservable(this);
+    }
+
+    async setNull() {
+        runInAction(() => {
+            this.cartDetail = null;
+        });
+    }
+
+    async getCartDetail(cartDetail: any) {
+        try {
+            if (cartDetail) {
+                runInAction(() => {
+                    this.cartDetail = cartDetail;
+                })
+            }
+
+        } catch (error) {
+            console.error("Lỗi xem chi tiết giỏ hàng", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+}
+
+export const orderDetailStore = new OrderDetailStore();

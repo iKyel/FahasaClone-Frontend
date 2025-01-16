@@ -5,7 +5,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 export interface IFeatureValue {
     _id: string;
-    tenDT: string;
+    ten: string;
     giaTri: string;
     tenTruyVan: string;
 };
@@ -41,27 +41,15 @@ class FeatureStore {
         }
     }
 
-    async getFeatureListValueByCategoryId(danhMucId: string) {
-        danhMucId = '677fc1e802c44b15ec070958'
-        try {
-            const response = await axiosInstance.get(`/api/category/getFeaturesByCategory/${danhMucId}`);
-
-            if (response.data) {
-                if (response.data.features && response.data.supplier)
-                    runInAction(() => {
-                        this.featureListValue = response.data.features;
-                        this.supplierList = response.data.supplier;
-                    })
-                return response.data;
-            }
-
-        } catch (error) {
-            console.error("Lỗi lấy đặc trưng dựa trên danh mục sản phẩm: ", error);
-            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
-                return error.response.data;
-            }
+    async getFeatureListValue(features: IFeatureListValue[], supplier: ISupplier[]) {
+        if (features.length > 0) {
+            runInAction(() => {
+                this.featureListValue = features;
+                this.supplierList = supplier;
+            })
         }
     }
+
 }
 
 export const featureStore = new FeatureStore();

@@ -1,9 +1,10 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 const Search_Header = () => {
     const router = useRouter();
+    const pathname = usePathname();
 
     const [searchName, setSearchName] = useState('');
 
@@ -15,7 +16,11 @@ const Search_Header = () => {
     //handleSubmit
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        router.push(`/search?searchName=${searchName}`);
+        if (pathname === '/search') {
+            router.replace(`/search?searchName=${searchName}`);
+        } else {
+            router.push(`/search?searchName=${searchName}`);
+        }
 
     }
     return (
