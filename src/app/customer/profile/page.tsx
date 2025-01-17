@@ -13,7 +13,7 @@ const ProfilePage = observer(() => {
 
     let updatedList: UpdatedList = {}
 
-    const [gioiTinh, setGioiTinh] = useState(userStore?.user?.gioiTinh || 'Nam')
+    const [gioiTinh, setGioiTinh] = useState(userStore?.user?.gioiTinh || '')
 
     const oldForm = {
         hoDem: userStore?.user?.hoDem || '',
@@ -29,7 +29,7 @@ const ProfilePage = observer(() => {
         ten: userStore?.user?.ten || '',
         sdt: userStore?.user?.sdt || '',
         email: userStore?.user?.email || '',
-        gioiTinh: userStore?.user?.gioiTinh || 'Nam',
+        gioiTinh: userStore?.user?.gioiTinh || '',
         ngaySinh: userStore?.user?.ngaySinh || ''
     });
 
@@ -108,6 +108,8 @@ const ProfilePage = observer(() => {
         }
     }
 
+    console.log(hasErrors, compareFields(oldForm, form))
+
     return (
         <div>
             <div>
@@ -139,6 +141,20 @@ const ProfilePage = observer(() => {
                     />
 
                     {errors.ten && (<p className="text-red-700 text-sm mt-1 text-center">{errors.ten}</p>)}
+
+                    <div className="mt-4 mb-2 text-sm flex items-center">
+                        <label htmlFor='username' className="w-1/5 block pl-1 font-medium">
+                            Tên đăng nhập
+                        </label>
+                        <input
+                            type='text'
+                            id='username'
+                            value={userStore?.user?.userName}
+                            className="block px-4 w-2/3 h-10 rounded border shadow-sm bg-gray-200"
+                            required
+                            disabled
+                        />
+                    </div>
 
                     <Input_And_Label_Profile
                         type='text'

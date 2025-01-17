@@ -48,7 +48,13 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
     const handleBuyNow = async () => {
         const result = await orderStore?.addProductToCart(id, numberOfProduct);
         if (result && result.message) {
-            router.push('/cart');
+            if (result.message !== 'Số lượng sản phẩm trong giỏ hàng vượt quá số lượng tồn!') {
+                router.push('/cart');
+            }
+            else {
+                setModalMessage(result.message);
+                setIsModalOpen(true);
+            }
         }
     }
 

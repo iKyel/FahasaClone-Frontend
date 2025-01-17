@@ -37,7 +37,10 @@ const Cart = observer(() => {
     };
 
     const handleSelectProduct = async (id: string) => {
-        await orderStore?.selectOrderDetail(id);
+        const result = await orderStore?.selectOrderDetail(id);
+        if (result && result.cartDetail) {
+            setSelectAll(result.cartDetail.every((product: any) => product.daChon === true))
+        }
     };
 
     const handleUpdateProduct = async (productId: string, newQuantity: number) => {

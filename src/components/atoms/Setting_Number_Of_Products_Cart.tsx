@@ -9,27 +9,35 @@ interface MyComponentProps {
 }
 
 const Setting_Number_Of_Products_Cart: React.FC<MyComponentProps> = ({ selectedQuantity, productId, handleChange }) => {
-    const [isNaN, setIsNaN] = useState(false);
+    const [num, setNum] = useState(selectedQuantity.toString());
 
     const minusNumOfProducts = () => {
-        if (selectedQuantity > 1) handleChange(productId, selectedQuantity - 1);
+        if (parseInt(num) > 1) {
+            setNum((parseInt(num) - 1).toString());
+            handleChange(productId, parseInt(num) - 1);
+        }
     }
     const plusNumOfProducts = () => {
-        if (selectedQuantity < 999) handleChange(productId, selectedQuantity + 1);
+        if (parseInt(num) < 999) {
+            setNum((parseInt(num) + 1).toString());
+            handleChange(productId, parseInt(num) + 1);
+        }
     };
 
     //handleQuantityChange
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
-        if ((inputValue !== '' && parseInt(inputValue) <= 999 && /^\d*$/.test(inputValue)) || inputValue === '') {
+        if ((inputValue !== '' && parseInt(inputValue) <= 999 && /^\d*$/.test(inputValue))) {
+            setNum(inputValue);
             handleChange(productId, parseInt(inputValue));
         }
         else if (inputValue === '') {
-            setIsNaN(true);
+            setNum(inputValue);
         }
     };
     const handleBlur = () => {
-        if (isNaN) {
+        if (num === '') {
+            setNum('1');
             handleChange(productId, 1);
         }
     }

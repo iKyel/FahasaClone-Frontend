@@ -36,12 +36,16 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                                         <img
                                             src={product.imageUrl}
                                             alt={product.tenSP}
-                                            className="w-32 h-32 rounded-md object-contain"
+                                            className="w-32 h-32 rounded-md object-contain cursor-pointer"
+                                            onClick={() => router.push(`/products/${product.sanPhamId}`)}
                                         />
                                     </div>
 
-                                    <div className='w-2/3 px-4 flex flex-col justify-between items-start text-start'>
-                                        <span onClick={() => router.push(`/products/${product.sanPhamId}`)}>{product.tenSP.length > 74 ? product.tenSP.slice(0, 71) + '...' : product.tenSP}</span>
+                                    <div
+                                        className='w-2/3 px-4 flex flex-col justify-between items-start text-start cursor-pointer'
+                                        onClick={() => router.push(`/products/${product.sanPhamId}`)}
+                                    >
+                                        <span>{product.tenSP.length > 74 ? product.tenSP.slice(0, 71) + '...' : product.tenSP}</span>
                                         <div>
                                             <span className='font-bold mr-2'>{Math.round(product.giaBan * (1 - (product.khuyenMai || 0) / 100)).toLocaleString()}₫</span>
                                             <span className='text-gray-500 line-through'>{product.giaBan.toLocaleString()}₫</span>
