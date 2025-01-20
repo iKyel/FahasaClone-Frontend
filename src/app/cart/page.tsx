@@ -6,14 +6,16 @@ import Table_Header_Row from '@/components/molecules/Table_Header_Row';
 import Table_Product_Row from '@/components/molecules/Table_Product_Row';
 import { useOrder, useOrderDetail } from '@/contexts/AppContext';
 import { observer } from 'mobx-react-lite'
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 
 const Cart = observer(() => {
+    const router = useRouter();
     const orderStore = useOrder();
     const orderDetailStore = useOrderDetail();
 
-    const [selectAll, setSelectAll] = useState(orderDetailStore?.cartDetail?.every((product) => product.daChon === true) || false);
+    const [selectAll, setSelectAll] = useState(false);
 
     //Modal
     const [modalMessage, setModalMessage] = useState('Có lỗi xảy ra');
@@ -23,8 +25,10 @@ const Cart = observer(() => {
         setIsClient(true);
         const fetchData = async () => {
             await orderStore?.getCart();
+            setSelectAll(orderDetailStore?.cartDetail?.every((product) => product.daChon === true) || false);
         }
         fetchData();
+
     }, []);
 
     const handleModal = () => {
@@ -70,7 +74,10 @@ const Cart = observer(() => {
                         <div className='text-center w-full h-96 bg-white rounded-lg flex flex-col justify-center items-center'>
                             <img className='w-40 h-40' src="/images/cart/ico_emptycart_2.svg" alt="emptycart" />
                             <p className='my-4 text-sm'>Chưa có sản phẩm trong giỏ hàng của bạn.</p>
-                            <button className='py-2 px-16 rounded-lg bg-red-700 text-white '>
+                            <button
+                                onClick={() => router.push('/')}
+                                className='py-2 px-16 rounded-lg bg-red-700 text-white '
+                            >
                                 Mua sắm ngay
                             </button>
                         </div>

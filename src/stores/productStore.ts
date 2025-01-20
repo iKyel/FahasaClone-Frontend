@@ -72,6 +72,8 @@ class ProductStore {
                 if (response.data.features || response.data.supplier) {
                     featureStore.getFeatureListValue(response.data.features, response.data.supplier);
                 }
+
+                return response.data;
             }
         } catch (error) {
             // console.error("Lỗi khi lấy danh sách sản phẩm: ", error);
@@ -92,6 +94,7 @@ class ProductStore {
                 runInAction(() => {
                     this.products = response.data.products;
                 });
+                return response.data;
             }
         } catch (error) {
             // console.error("Lỗi khi tìm kiếm sản phẩm: ", error);

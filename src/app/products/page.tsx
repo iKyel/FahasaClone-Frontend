@@ -136,7 +136,11 @@ const Products = observer(() => {
                                         <Product_List products={productStore.products} />
                                         {/* Phân trang */}
                                         <div className="flex justify-center mt-8">
-                                            <Pagination setPagination={handleFilterChange} totalPage={totalPage} selectedPage={selectedPage || '1'} />
+                                            <Pagination
+                                                setPagination={handleFilterChange}
+                                                totalPage={totalPage}
+                                                selectedPage={selectedPage || '1'}
+                                            />
                                         </div>
                                     </>
                                 )

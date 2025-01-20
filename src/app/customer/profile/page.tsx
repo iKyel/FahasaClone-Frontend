@@ -108,8 +108,6 @@ const ProfilePage = observer(() => {
         }
     }
 
-    console.log(hasErrors, compareFields(oldForm, form))
-
     return (
         <div>
             <div>

@@ -9,7 +9,7 @@ const Cart_Payment_Button: React.FC<MyComponentProps> = ({ totalPrice }) => {
     const router = useRouter();
 
     const handlePayment = () => {
-        router.push('/payment');
+        router.push('/onestepcheckout');
     }
 
     return (

@@ -1,8 +1,8 @@
 import api from "@/utils/axios_catch_error_token";
 import axiosInstance from "@/utils/axiosInstance";
-import axios from "axios";
 import { makeAutoObservable, runInAction } from "mobx";
 import { orderDetailStore } from "./orderDetail";
+import axios from "axios";
 
 export interface IOrder {
     _id: string;
@@ -11,27 +11,22 @@ export interface IOrder {
     ptThanhToan: string;
     tongTien: number;
     ghiChu: string;
+    diaChiDatHang?: string;
+    createdAt?: string;
+    soLuong?: number;
 }
 
 class OrderStore {
     cart: IOrder | null = null;
+    orders: IOrder[] | null = null;
 
     constructor() {
         makeAutoObservable(this);
-        this.getCart();
-    }
-
-    async setNull() {
-        runInAction(() => {
-            this.cart = null;
-        });
-
-        await orderDetailStore.setNull();
     }
 
     async getCart() {
         try {
-            const response = await api.get('/api/order/getCart');
+            const response = await axiosInstance.get('/api/order/getCart');
 
             if (response.data) {
                 if (response.data.cart) {
@@ -48,6 +43,25 @@ class OrderStore {
 
         } catch (error) {
             console.error("Lỗi xem giỏ hàng", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+
+    async getCartSelected() {
+        try {
+            const response = await api.get('api/order/getSelectedProduct');
+
+            if (response.data) {
+                if (response.data.cartDetail) {
+                    await orderDetailStore.getCartDetail(response.data.cartDetail);
+                }
+                return response.data;
+            }
+
+        } catch (error) {
+            console.error("Lỗi xem sản phẩm được chọn trong giỏ hàng", error);
             if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
                 return error.response.data;
             }
@@ -150,6 +164,110 @@ class OrderStore {
             }
         }
     }
+
+    async createOrder(diaChi: string, ptVanChuyen: string, ptThanhToan: string, ghiChu: string) {
+        try {
+            const response = await api.post('api/order/createPaymentOrder', { diaChi, ptVanChuyen, ptThanhToan, ghiChu });
+
+            if (response.data) {
+                return response.data;
+            }
+
+        } catch (error) {
+            console.error("Lỗi tạo đơn đặt", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+
+    async getOrders() {
+        try {
+            const response = await api.get('api/order/customerGetSaleInvokes');
+            // console.log(response.data);
+            // let response = {
+            //     data: {
+            //         saleInvoices: [
+            //             {
+            //                 _id: "order001",
+            //                 trangThaiDon: "Chờ xác nhận",
+            //                 ptVanChuyen: "Giao hàng nhanh",
+            //                 ptThanhToan: "Thanh toán khi nhận hàng",
+            //                 tongTien: 500000,
+            //                 ghiChu: "Giao hàng vào buổi sáng",
+            //                 diaChiDatHang: "123 Đường ABC, Phường DEF, Quận GHI, TP. HCM",
+            //                 createdAt: "2025-01-18T04:18:54.543Z",
+            //                 soLuong: 2,
+            //             },
+            //             {
+            //                 _id: "order002",
+            //                 trangThaiDon: "Hoàn thành",
+            //                 ptVanChuyen: "Giao hàng tiêu chuẩn",
+            //                 ptThanhToan: "Thanh toán qua VNPay",
+            //                 tongTien: 1200000,
+            //                 ghiChu: "Gói hàng cẩn thận",
+            //                 diaChiDatHang: "456 Đường XYZ, Phường LMN, Quận OPQ, Hà Nội",
+            //                 createdAt: "2025-01-18T04:18:54.543Z",
+            //                 soLuong: 5,
+            //             },
+            //             {
+            //                 _id: "order003",
+            //                 trangThaiDon: "Đã hủy",
+            //                 ptVanChuyen: "Giao hàng siêu tốc",
+            //                 ptThanhToan: "Chuyển khoản ngân hàng",
+            //                 tongTien: 350000,
+            //                 ghiChu: "Khách hàng yêu cầu hủy do thay đổi kế hoạch",
+            //                 diaChiDatHang: "789 Đường QRS, Phường TUV, Quận WXY, Đà Nẵng",
+            //                 createdAt: "2025-01-18T04:18:54.543Z",
+            //                 soLuong: 1,
+            //             },
+            //         ]
+            //     }
+            // }
+
+            if (response.data) {
+                if (response.data.saleInvoices) {
+                    runInAction(() => {
+                        this.orders = response.data.saleInvoices;
+                    })
+                }
+                return response.data;
+            }
+
+        } catch (error) {
+            console.error("Lỗi xem đơn đặt", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+
+    async getOrderDetail(id: string) {
+        try {
+            const response = await axiosInstance.get(`api/order/getSaleInvoikeDetail/${id}`);
+
+            if (response.data) {
+                if (response.data.saleInvoice) {
+                    runInAction(() => {
+                        this.orders = [response.data.saleInvoice];
+                    })
+                }
+
+                if (response.data.detailSaleInvoices) {
+                    await orderDetailStore.getOrderDetail(response.data.detailSaleInvoices);
+                }
+                return response.data;
+            }
+
+        } catch (error) {
+            console.error("Lỗi xem giỏ hàng", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+
 }
+
 
 export const orderStore = new OrderStore();
