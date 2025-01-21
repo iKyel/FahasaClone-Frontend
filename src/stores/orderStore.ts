@@ -184,46 +184,6 @@ class OrderStore {
     async getOrders() {
         try {
             const response = await api.get('api/order/customerGetSaleInvokes');
-            // console.log(response.data);
-            // let response = {
-            //     data: {
-            //         saleInvoices: [
-            //             {
-            //                 _id: "order001",
-            //                 trangThaiDon: "Chờ xác nhận",
-            //                 ptVanChuyen: "Giao hàng nhanh",
-            //                 ptThanhToan: "Thanh toán khi nhận hàng",
-            //                 tongTien: 500000,
-            //                 ghiChu: "Giao hàng vào buổi sáng",
-            //                 diaChiDatHang: "123 Đường ABC, Phường DEF, Quận GHI, TP. HCM",
-            //                 createdAt: "2025-01-18T04:18:54.543Z",
-            //                 soLuong: 2,
-            //             },
-            //             {
-            //                 _id: "order002",
-            //                 trangThaiDon: "Hoàn thành",
-            //                 ptVanChuyen: "Giao hàng tiêu chuẩn",
-            //                 ptThanhToan: "Thanh toán qua VNPay",
-            //                 tongTien: 1200000,
-            //                 ghiChu: "Gói hàng cẩn thận",
-            //                 diaChiDatHang: "456 Đường XYZ, Phường LMN, Quận OPQ, Hà Nội",
-            //                 createdAt: "2025-01-18T04:18:54.543Z",
-            //                 soLuong: 5,
-            //             },
-            //             {
-            //                 _id: "order003",
-            //                 trangThaiDon: "Đã hủy",
-            //                 ptVanChuyen: "Giao hàng siêu tốc",
-            //                 ptThanhToan: "Chuyển khoản ngân hàng",
-            //                 tongTien: 350000,
-            //                 ghiChu: "Khách hàng yêu cầu hủy do thay đổi kế hoạch",
-            //                 diaChiDatHang: "789 Đường QRS, Phường TUV, Quận WXY, Đà Nẵng",
-            //                 createdAt: "2025-01-18T04:18:54.543Z",
-            //                 soLuong: 1,
-            //             },
-            //         ]
-            //     }
-            // }
 
             if (response.data) {
                 if (response.data.saleInvoices) {
@@ -244,7 +204,7 @@ class OrderStore {
 
     async getOrderDetail(id: string) {
         try {
-            const response = await axiosInstance.get(`api/order/getSaleInvoikeDetail/${id}`);
+            const response = await api.get(`api/order/getSaleInvoikeDetail/${id}`);
 
             if (response.data) {
                 if (response.data.saleInvoice) {
@@ -260,12 +220,35 @@ class OrderStore {
             }
 
         } catch (error) {
-            console.error("Lỗi xem giỏ hàng", error);
+            console.error("Lỗi xem chi tiết đơn đặt", error);
             if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
                 return error.response.data;
             }
         }
     }
+
+    async cancelOrder(id: string) {
+        try {
+            const response = await api.patch(`api/order/cancelOrder/${id}`);
+
+            if (response.data) {
+                if (response.data.saleInvoices) {
+                    runInAction(() => {
+                        this.orders = response.data.saleInvoices;
+                    })
+                }
+
+                return response.data;
+            }
+
+        } catch (error) {
+            console.error("Lỗi xóa đơn đặt", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+
 
 }
 

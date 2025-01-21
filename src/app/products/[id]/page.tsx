@@ -162,7 +162,7 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
             <div className="my-2 p-4 bg-white rounded-lg">
                 <h3 className="font-bold mb-2">FAHASA GIỚI THIỆU</h3>
                 {productStore?.products && productStore.products.length > 0 &&
-                    <Product_List_DetailProduct products={productStore?.products?.filter((product) => product._id !== id).slice(0, 4)} />
+                    <Product_List_DetailProduct products={productStore?.products?.filter((product) => product._id !== id).slice(0, 5)} />
                 }
             </div>
             <Modal

@@ -81,6 +81,7 @@ const Products = observer(() => {
                 ...(selectedPage && { pageNum: selectedPage }),
                 ...featuresQuery,
             };
+            // await categoryStore?.getCategories();
             const result = await productStore?.getProducts(query);
             if (result && result.totalPage) {
                 setTotalPage(result.totalPage);
@@ -97,11 +98,11 @@ const Products = observer(() => {
                     <div className='flex items-start'>
                         {/* Sidebar */}
                         <div className='w-1/4 bg-white mr-4 p-2 pb-8 rounded-lg shadow text-sm'>
-                            {categoryStore?.categories && featureStore?.featureListValue && (
+                            {categoryStore?.categories && (
                                 <SlideBar_Product
                                     categories={categoryStore.categories}
-                                    features={featureStore.featureListValue}
-                                    suppliers={featureStore.supplierList}
+                                    features={featureStore?.featureListValue || []}
+                                    suppliers={featureStore?.supplierList || []}
                                     selectedCategory={selectedCategory}
                                     selectedPrice={priceValue}
                                     selectedSupplier={selectedSupplier}

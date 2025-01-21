@@ -6,12 +6,13 @@ import { makeAutoObservable, runInAction } from "mobx";
 export interface ICategory {
     _id: string;
     ten: string;
-    parentId: string | null;
+    parentId?: string | null;
     children?: ICategory[];
 };
 
 class CategoryStore {
     categories: ICategory[] | null = null;
+    category: ICategory | null = null;
 
     constructor() {
         makeAutoObservable(this);
@@ -34,6 +35,28 @@ class CategoryStore {
 
         } catch (error) {
             console.error("Lỗi lấy danh mục sản phẩm: ", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+
+    async getCategoriesById(danhMucId: string) {
+        try {
+            const response = await axiosInstance.get(`/api/category/getCategoryName/${danhMucId}`);
+
+            if (response.data) {
+                if (response.data.category) {
+                    runInAction(() => {
+                        this.category = response.data.category;
+                    })
+                }
+
+                return response.data;
+            }
+
+        } catch (error) {
+            console.error("Lỗi lấy tên danh mục sản phẩm: ", error);
             if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
                 return error.response.data;
             }
