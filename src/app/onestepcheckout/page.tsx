@@ -10,6 +10,7 @@ import { useOrder, useOrderDetail, useUser } from '@/contexts/AppContext'
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
+import Modal from '@/components/atoms/Modal';
 
 const deliveryList = [
     { name: 'Giao hàng tiết kiệm', price: 10000 },
@@ -19,7 +20,7 @@ const deliveryList = [
 
 const paymentList = [
     { name: 'Thanh toán bằng PayPal', value: 'PayPal' },
-    { name: 'Thanh toán bằng tiền mặt khi nhận hàng', value: 'Tiền mặt khi nhận hàng' },
+    { name: 'Thanh toán bằng tiền mặt khi nhận hàng', value: 'COD' },
 ]
 
 const OneStepCheckout = observer(() => {
@@ -29,6 +30,11 @@ const OneStepCheckout = observer(() => {
     const orderDetailStore = useOrderDetail();
 
     const [isClient, setIsClient] = useState(false);
+
+    //Modal
+    const [modalMessage, setModalMessage] = useState('Có lỗi xảy ra');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     useEffect(() => {
         setIsClient(true);
         const fetchData = async () => {
@@ -69,6 +75,14 @@ const OneStepCheckout = observer(() => {
         if (result && result.message && result.message === 'Tạo đơn đặt hàng thành công') {
             router.push('successPayment');
         }
+        else {
+            setModalMessage(result.message);
+            setIsModalOpen(true);
+        }
+    }
+
+    const handleModal = () => {
+        setIsModalOpen(false);
     }
 
     return (
@@ -120,6 +134,11 @@ const OneStepCheckout = observer(() => {
                     />
                 </div>
             )}
+            <Modal
+                isOpen={isModalOpen}
+                modalMessage={modalMessage}
+                onClose={handleModal}
+            />
         </div>
     )
 });

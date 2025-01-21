@@ -4,6 +4,7 @@ import Pagination from '@/components/molecules/Pagination';
 import Product_List from '@/components/organisms/Product_List';
 import SlideBar_Product, { ListValue } from '@/components/organisms/SlideBar_Product';
 import { useCategory, useFeature, useProduct } from '@/contexts/AppContext';
+import scrollToTop from '@/utils/scroll_To_Top';
 import { observer } from 'mobx-react-lite';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -56,6 +57,7 @@ const Products = observer(() => {
 
         //Cập nhật query trang
         if (filter.page) currentParams.set('pageNum', filter.page);
+        else currentParams.set('pageNum', '1');
 
         //Cập nhật query orderBy
         if (filter.orderBy) currentParams.set('orderBy', filter.orderBy);
@@ -67,7 +69,7 @@ const Products = observer(() => {
         else if (filter.featuresFilter?.tenTruyVan) {
             currentParams.delete(filter.featuresFilter?.tenTruyVan)
         }
-
+        scrollToTop();
         router.replace(`?${currentParams.toString()}`);
     };
 

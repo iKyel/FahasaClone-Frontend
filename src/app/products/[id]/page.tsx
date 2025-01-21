@@ -104,7 +104,7 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                 <div className="w-3/5">
                     <div className="p-4 bg-white rounded-lg">
                         {/* Tiêu đề sản phẩm */}
-                        <h1 className="text-2xl mb-4">{productStore?.productDetail?.tenSP}</h1>
+                        <h1 className="text-2xl mb-2">{productStore?.productDetail?.tenSP}</h1>
 
                         {/* Nhà cung cấp và thông tin */}
                         <div className="grid grid-cols-2 gap-x-56 mb-4 text-sm">
@@ -116,9 +116,9 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                             )}
 
                             {featureStore?.featureValue?.map((feature, index) =>
-                                ['Tác giả', 'Nhà xuất bản', 'Hình thức', 'Thương hiệu', 'Xuất xứ', 'Độ tuổi'].includes(feature.ten)
+                                ['Tác giả', 'Nhà xuất bản', 'Hình thức', 'Thương hiệu', 'Xuất xứ thương hiệu', 'Độ tuổi'].includes(feature.ten)
                                 && (
-                                    <div key={index} className="flex">
+                                    <div key={index} className="flex mt-1">
                                         <p className="text-gray-800">{feature.ten}:</p>
                                         <p className="text-gray-900 font-bold ml-2">{feature.giaTri}</p>
                                     </div>

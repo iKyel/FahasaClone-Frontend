@@ -36,7 +36,7 @@ const Cart_Payment_Button: React.FC<MyComponentProps> = ({ totalPrice }) => {
             </div>
 
             <button
-                className={`w-full mt-2 p-2 bg-red-500 text-white font-bold text-xl rounded-lg ${totalPrice > 0 ? 'hover:bg-red-700' : ''} `}
+                className={`w-full mt-2 p-2 bg-red-500 text-white font-bold text-xl rounded-lg ${totalPrice > 0 ? 'hover:bg-red-700 cursor-pointer' : 'cursor-not-allowed'} `}
                 onClick={handlePayment}
                 disabled={totalPrice === 0}
             >

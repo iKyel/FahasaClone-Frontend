@@ -85,7 +85,7 @@ class OrderStore {
             }
 
         } catch (error) {
-            console.error("Lỗi thêm sản phẩm vào giỏ hàng", error);
+            // console.error("Lỗi thêm sản phẩm vào giỏ hàng", error);
             if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
                 return error.response.data;
             }
