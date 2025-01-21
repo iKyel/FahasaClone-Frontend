@@ -9,9 +9,6 @@ interface ProductListProps {
 const Product_List_DetailProduct: React.FC<ProductListProps> = ({ products }) => {
     const router = useRouter();
 
-    const tinhGiaGoc = (product: IProduct) => {
-        return Math.round(product.giaBan / (1 - (product.khuyenMai ? product.khuyenMai : 0) / 100));
-    }
     return (
         <div>
             <div className='grid grid-cols-5 gap-2'>
@@ -35,12 +32,14 @@ const Product_List_DetailProduct: React.FC<ProductListProps> = ({ products }) =>
                                     </span>
                                 )}
                             </div>
-                            <h3 className='h-12 my-2'>{product.tenSP && product.tenSP.length > 58 ? product.tenSP.slice(0, 55) + '...' : product.tenSP}</h3>
+                            <h3 className='h-12 my-2'>{product.tenSP && product.tenSP.length > 54 ? product.tenSP.slice(0, 51) + '...' : product.tenSP}</h3>
                             <div className='h-12 my-2'>
-                                <p className='font-bold text-lg text-red-700'>{product.giaBan ? product.giaBan.toLocaleString() : '0'}₫</p>
+                                <p className='font-bold text-lg text-red-700'>
+                                    {product.giaBan ? Math.round(product.giaBan * (1 - product.khuyenMai / 100)).toLocaleString() : '0'}₫
+                                </p>
                                 {product.khuyenMai > 0 && (
                                     <p className='line-through text-gray-600'>
-                                        {tinhGiaGoc(product).toLocaleString()}₫
+                                        {product.giaBan.toLocaleString()}₫
                                     </p>
                                 )}
                             </div>

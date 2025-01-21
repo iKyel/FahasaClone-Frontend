@@ -44,7 +44,6 @@ class UserStore {
         }
         try {
             const response = await axiosInstance.post('/api/account/login', form);
-            console.log(response.data);
             if (response.data) {
                 if (response.data.user) {
                     runInAction(() => {
@@ -92,6 +91,7 @@ class UserStore {
     async logout() {
         try {
             const response = await api.get('/api/account/logout');
+
             if (response.data.message) {
                 destroyCookie(null, 'token');
                 runInAction(() => {

@@ -32,7 +32,7 @@ const Categories_List_Col: React.FC<MyComponentProps> = ({ categories, selectedC
         return categoriesToRender.map((category, index) => (
             <div
                 key={index}
-                className={`pl-${index * 2} cursor-pointer hover:text-yellow-700 ${selectedCategory === category._id ? `text-yellow-400` : ``}`}
+                className={`pl-${index * 2} cursor-pointer py-1 hover:text-yellow-700 ${selectedCategory === category._id ? `text-yellow-400` : ``}`}
                 onClick={() => handleCategoryClick(category._id)}
             >
                 {category.ten}

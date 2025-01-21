@@ -48,7 +48,13 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
     const handleBuyNow = async () => {
         const result = await orderStore?.addProductToCart(id, numberOfProduct);
         if (result && result.message) {
-            router.push('/cart');
+            if (result.message !== 'Số lượng sản phẩm trong giỏ hàng vượt quá số lượng tồn!') {
+                router.push('/cart');
+            }
+            else {
+                setModalMessage(result.message);
+                setIsModalOpen(true);
+            }
         }
     }
 
@@ -98,7 +104,7 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                 <div className="w-3/5">
                     <div className="p-4 bg-white rounded-lg">
                         {/* Tiêu đề sản phẩm */}
-                        <h1 className="text-2xl mb-4">{productStore?.productDetail?.tenSP}</h1>
+                        <h1 className="text-2xl mb-2">{productStore?.productDetail?.tenSP}</h1>
 
                         {/* Nhà cung cấp và thông tin */}
                         <div className="grid grid-cols-2 gap-x-56 mb-4 text-sm">
@@ -110,9 +116,9 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                             )}
 
                             {featureStore?.featureValue?.map((feature, index) =>
-                                ['Tác giả', 'Nhà xuất bản', 'Hình thức', 'Thương hiệu', 'Xuất xứ', 'Độ tuổi'].includes(feature.ten)
+                                ['Tác giả', 'Nhà xuất bản', 'Hình thức', 'Thương hiệu', 'Xuất xứ thương hiệu', 'Độ tuổi'].includes(feature.ten)
                                 && (
-                                    <div key={index} className="flex">
+                                    <div key={index} className="flex mt-1">
                                         <p className="text-gray-800">{feature.ten}:</p>
                                         <p className="text-gray-900 font-bold ml-2">{feature.giaTri}</p>
                                     </div>
@@ -156,7 +162,7 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
             <div className="my-2 p-4 bg-white rounded-lg">
                 <h3 className="font-bold mb-2">FAHASA GIỚI THIỆU</h3>
                 {productStore?.products && productStore.products.length > 0 &&
-                    <Product_List_DetailProduct products={productStore?.products?.filter((product) => product._id !== id).slice(0, 4)} />
+                    <Product_List_DetailProduct products={productStore?.products?.filter((product) => product._id !== id).slice(0, 5)} />
                 }
             </div>
             <Modal

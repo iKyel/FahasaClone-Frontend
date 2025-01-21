@@ -21,7 +21,6 @@ const Sidebar = observer(() => {
         { label: "Sổ địa chỉ", href: "/customer/address", icon: 'fa-regular fa-address-book fa-xl text-black' },
         { label: "Đổi mật khẩu", href: "/customer/changepassword", icon: 'fa-solid fa-key fa-xl text-black' },
         { label: "Đơn hàng của tôi", href: "/customer/orders", icon: 'fa-regular fa-rectangle-list fa-xl text-black' },
-        { label: "Sản phẩm yêu thích", href: "/customer/wishlist", icon: 'fa-regular fa-heart fa-xl text-black' },
         { label: "Nhận xét của tôi", href: "/customer/mycomment", icon: 'fa-regular fa-star fa-xl text-black' },
     ];
 

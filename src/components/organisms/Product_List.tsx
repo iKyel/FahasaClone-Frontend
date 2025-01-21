@@ -30,6 +30,13 @@ const Product_List: React.FC<ProductListProps> = ({ products }) => {
                                         -{product.khuyenMai}%
                                     </span>
                                 )}
+
+                                {/* Hết hàng */}
+                                {product.soLuong === 0 && (
+                                    <span className="absolute top-0 left-0 h-6 w-24 bg-red-300 text-red-700 text-sm font-bold p-2 flex items-center justify-center">
+                                        Hết hàng
+                                    </span>
+                                )}
                             </div>
                             <h3 className='h-12 my-2'>{product.tenSP && product.tenSP.length > 58 ? product.tenSP.slice(0, 55) + '...' : product.tenSP}</h3>
                             <div className='h-12 my-2'>

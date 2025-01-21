@@ -4,6 +4,7 @@ import Pagination from '@/components/molecules/Pagination';
 import Product_List from '@/components/organisms/Product_List';
 import SlideBar_Product, { ListValue } from '@/components/organisms/SlideBar_Product';
 import { useCategory, useFeature, useProduct } from '@/contexts/AppContext';
+import scrollToTop from '@/utils/scroll_To_Top';
 import { observer } from 'mobx-react-lite';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -56,6 +57,7 @@ const Products = observer(() => {
 
         //Cập nhật query trang
         if (filter.page) currentParams.set('pageNum', filter.page);
+        else currentParams.set('pageNum', '1');
 
         //Cập nhật query orderBy
         if (filter.orderBy) currentParams.set('orderBy', filter.orderBy);
@@ -67,7 +69,7 @@ const Products = observer(() => {
         else if (filter.featuresFilter?.tenTruyVan) {
             currentParams.delete(filter.featuresFilter?.tenTruyVan)
         }
-
+        scrollToTop();
         router.replace(`?${currentParams.toString()}`);
     };
 
@@ -81,6 +83,7 @@ const Products = observer(() => {
                 ...(selectedPage && { pageNum: selectedPage }),
                 ...featuresQuery,
             };
+            // await categoryStore?.getCategories();
             const result = await productStore?.getProducts(query);
             if (result && result.totalPage) {
                 setTotalPage(result.totalPage);
@@ -97,11 +100,11 @@ const Products = observer(() => {
                     <div className='flex items-start'>
                         {/* Sidebar */}
                         <div className='w-1/4 bg-white mr-4 p-2 pb-8 rounded-lg shadow text-sm'>
-                            {categoryStore?.categories && featureStore?.featureListValue && (
+                            {categoryStore?.categories && (
                                 <SlideBar_Product
                                     categories={categoryStore.categories}
-                                    features={featureStore.featureListValue}
-                                    suppliers={featureStore.supplierList}
+                                    features={featureStore?.featureListValue || []}
+                                    suppliers={featureStore?.supplierList || []}
                                     selectedCategory={selectedCategory}
                                     selectedPrice={priceValue}
                                     selectedSupplier={selectedSupplier}
@@ -136,7 +139,11 @@ const Products = observer(() => {
                                         <Product_List products={productStore.products} />
                                         {/* Phân trang */}
                                         <div className="flex justify-center mt-8">
-                                            <Pagination setPagination={handleFilterChange} totalPage={totalPage} selectedPage={selectedPage || '1'} />
+                                            <Pagination
+                                                setPagination={handleFilterChange}
+                                                totalPage={totalPage}
+                                                selectedPage={selectedPage || '1'}
+                                            />
                                         </div>
                                     </>
                                 )

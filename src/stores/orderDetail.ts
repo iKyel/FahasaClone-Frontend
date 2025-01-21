@@ -1,5 +1,3 @@
-import api from "@/utils/axios_catch_error_token";
-import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import { makeAutoObservable, runInAction } from "mobx";
 
@@ -18,15 +16,10 @@ export interface IOrderDetail {
 
 class OrderDetailStore {
     cartDetail: IOrderDetail[] | null = null;
+    orderDetail: IOrderDetail[] | null = null;
 
     constructor() {
         makeAutoObservable(this);
-    }
-
-    async setNull() {
-        runInAction(() => {
-            this.cartDetail = null;
-        });
     }
 
     async getCartDetail(cartDetail: any) {
@@ -44,6 +37,23 @@ class OrderDetailStore {
             }
         }
     }
+
+    async getOrderDetail(orderDetail: any) {
+        try {
+            if (orderDetail) {
+                runInAction(() => {
+                    this.orderDetail = orderDetail;
+                })
+            }
+
+        } catch (error) {
+            console.error("Lỗi xem chi tiết giỏ hàng", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+
 }
 
 export const orderDetailStore = new OrderDetailStore();

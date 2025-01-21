@@ -36,15 +36,24 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                                         <img
                                             src={product.imageUrl}
                                             alt={product.tenSP}
-                                            className="w-32 h-32 rounded-md object-contain"
+                                            className="w-32 h-32 object-contain cursor-pointer"
+                                            onClick={() => router.push(`/products/${product.sanPhamId}`)}
                                         />
                                     </div>
 
-                                    <div className='w-2/3 px-4 flex flex-col justify-between items-start text-start'>
-                                        <span onClick={() => router.push(`/products/${product.sanPhamId}`)}>{product.tenSP.length > 74 ? product.tenSP.slice(0, 71) + '...' : product.tenSP}</span>
+                                    <div
+                                        className='w-2/3 px-4 flex flex-col justify-between items-start text-start cursor-pointer'
+                                        onClick={() => router.push(`/products/${product.sanPhamId}`)}
+                                    >
+                                        <span>{product.tenSP.length > 74 ? product.tenSP.slice(0, 71) + '...' : product.tenSP}</span>
                                         <div>
-                                            <span className='font-bold mr-2'>{Math.round(product.giaBan * (1 - (product.khuyenMai || 0) / 100)).toLocaleString()}₫</span>
-                                            <span className='text-gray-500 line-through'>{product.giaBan.toLocaleString()}₫</span>
+                                            <div>
+                                                {product.soLuongTon === 0 && <p className='text-sm text-red-700'>*Sản phẩm này đã hết hàng</p>}
+                                            </div>
+                                            <div>
+                                                <span className='font-bold mr-2'>{Math.round(product.giaBan * (1 - (product.khuyenMai || 0) / 100)).toLocaleString()}₫</span>
+                                                {product.khuyenMai > 0 && <span className='text-gray-500 line-through'>{product.giaBan.toLocaleString()}₫</span>}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -53,11 +62,13 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                                 className={`w-1/12 ${products && index === products.length - 1 ? "border-b-0" : "border-b-2"
                                     }`}
                             >
-                                <Setting_Number_Of_Products_Cart
-                                    selectedQuantity={product.soLuong}
-                                    productId={product._id}
-                                    handleChange={handleUpdateProduct}
-                                />
+                                {product.soLuongTon !== 0 && (
+                                    <Setting_Number_Of_Products_Cart
+                                        selectedQuantity={product.soLuong}
+                                        productId={product._id}
+                                        handleChange={handleUpdateProduct}
+                                    />
+                                )}
                             </td>
                             <td
                                 className={`w-1/6 text-red-700 font-bold ${products && index === products.length - 1 ? "border-b-0" : "border-b-2"

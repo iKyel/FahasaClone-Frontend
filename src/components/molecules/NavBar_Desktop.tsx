@@ -101,7 +101,10 @@ const NavBar_Desktop = observer(() => {
                                                                 </li>
                                                             ))}
                                                             {category2.children && category2.children.length > 5 && (
-                                                                <li className='cursor-pointer text-blue-500'>
+                                                                <li
+                                                                    className='cursor-pointer text-blue-500'
+                                                                    onClick={() => { handleClick(category2._id) }}
+                                                                >
                                                                     Xem tất cả
                                                                 </li>
                                                             )}

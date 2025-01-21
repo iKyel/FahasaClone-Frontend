@@ -1,4 +1,3 @@
-import api from "@/utils/axios_catch_error_token";
 import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import { makeAutoObservable, runInAction } from "mobx";
@@ -27,9 +26,16 @@ export interface IProduct {
 class ProductStore {
     products: IProduct[] | null = null;
     productDetail: IProduct | null = null;
+    homeProducts: (IProduct[] | null)[] = Array(10).fill(null);
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setNull() {
+        runInAction(() => {
+            this.productDetail = null;
+        })
     }
 
     async getProductDetail(id: string) {
@@ -72,6 +78,8 @@ class ProductStore {
                 if (response.data.features || response.data.supplier) {
                     featureStore.getFeatureListValue(response.data.features, response.data.supplier);
                 }
+
+                return response.data;
             }
         } catch (error) {
             // console.error("Lỗi khi lấy danh sách sản phẩm: ", error);
@@ -92,6 +100,7 @@ class ProductStore {
                 runInAction(() => {
                     this.products = response.data.products;
                 });
+                return response.data;
             }
         } catch (error) {
             // console.error("Lỗi khi tìm kiếm sản phẩm: ", error);
@@ -103,5 +112,30 @@ class ProductStore {
             }
         }
     }
+
+    async getHomeProducts(query: Record<string, string | null>, index: number) {
+        try {
+            const response = await axiosInstance.get('/api/product/getProducts', { params: query });
+
+            if (response.data) {
+                if (response.data.products) {
+                    runInAction(() => {
+                        this.homeProducts[index] = response.data.products;
+                    });
+                }
+
+                return response.data;
+            }
+        } catch (error) {
+            // console.error("Lỗi khi lấy danh sách sản phẩm trang home: ", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                runInAction(() => {
+                    this.homeProducts = Array(10).fill(null);
+                })
+                return error.response.data;
+            }
+        }
+    }
+
 }
 export const productStore = new ProductStore();
