@@ -11,7 +11,7 @@ const outstanding_list_1 = [
   { imageUrl: '/images/catehomepage/catehomepage_dochoi.png', name: 'Đồ chơi', categoryId: '6780ee9f29a4815a5e3dc391' },
   { imageUrl: '/images/catehomepage/catehomepage_dungcuhs.png', name: 'Dụng cụ học sinh', categoryId: '678e108aeba73ca76534e1a6' },
   { imageUrl: '/images/catehomepage/catehomepage_vanphongpham.png', name: 'Văn phòng phẩm', categoryId: '6780dfc65547812decc05bdf' },
-  { imageUrl: '/images/catehomepage/catehomepage_bachhoaonline.png', name: 'Bách hóa online', categoryId: '6780eecf29a4815a5e3dc3a0' },
+  { imageUrl: '/images/catehomepage/catehomepage_bachhoaonline.png', name: 'Bách hóa online', categoryId: '678e118deba73ca76534e1b3' },
 ]
 
 const outstanding_list_2 = [

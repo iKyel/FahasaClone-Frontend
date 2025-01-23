@@ -55,7 +55,7 @@ const NavBar_Desktop = observer(() => {
 
                 {/* Danh mục sản phẩm */}
                 {isHovered && isClient && (
-                    <div className="absolute top-16 right-0 z-50 w-full p-2 bg-white border rounded shadow-lg">
+                    <div className="absolute top-16 right-0 z-50 w-full p-2 py-10 bg-white border rounded shadow-lg">
                         <div className="flex">
                             {/* Danh sách danh mục bên trái */}
                             <div className="w-1/4 border-r p-2">

@@ -44,7 +44,7 @@ const SearchProduct = observer(() => {
     }, [searchParams])
     return (
         <div className='bg-white p-4 rounded-lg shadow text-sm'>
-            <h3 className='text-lg mb-4'>Kết quả tìm kiếm: {searchName}</h3>
+            <h3 className='text-lg mb-4'>Kết quả tìm kiếm: <span className='p-1 bg-gray-200 rounded-lg'>{searchName}</span></h3>
 
             {/* Danh sách sách tìm kiếm */}
             {productStore?.products && productStore.products.length > 0

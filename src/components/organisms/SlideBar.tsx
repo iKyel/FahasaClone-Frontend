@@ -21,7 +21,6 @@ const Sidebar = observer(() => {
         { label: "Sổ địa chỉ", href: "/customer/address", icon: 'fa-regular fa-address-book fa-xl text-black' },
         { label: "Đổi mật khẩu", href: "/customer/changepassword", icon: 'fa-solid fa-key fa-xl text-black' },
         { label: "Đơn hàng của tôi", href: "/customer/orders", icon: 'fa-regular fa-rectangle-list fa-xl text-black' },
-        { label: "Nhận xét của tôi", href: "/customer/mycomment", icon: 'fa-regular fa-star fa-xl text-black' },
     ];
 
     //handleIndexSite
@@ -52,8 +51,9 @@ const Sidebar = observer(() => {
                         onClick={handleIndexSite}
                     />
                 ))}
-                <li>
-                    <a className="block py-2 px-4 rounded-md hover:cursor-pointer" onClick={() => setIsModalOpen(true)}>
+                <li className='flex items-center p-1 hover:text-red-700'>
+                    <i className="fa-solid fa-right-from-bracket text-black fa-xl"></i>
+                    <a className="block px-4 rounded-md hover:cursor-pointer" onClick={() => setIsModalOpen(true)}>
                         Đăng xuất
                     </a>
                 </li>

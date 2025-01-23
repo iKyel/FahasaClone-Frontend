@@ -84,14 +84,24 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
                         {products?.map((product) => (
                             <div
                                 key={product._id}
-                                className="w-full p-2 rounded-lg hover:shadow-lg hover:border-2 transition duration-300"
+                                className="w-full p-2 rounded-lg hover:shadow-lg outline outline-transparent hover:outline-2 hover:outline-gray-200 transition duration-300"
                                 onClick={() => router.push(`/products/${product._id}`)}
                             >
-                                <img
-                                    src={product.imageUrl}
-                                    alt={product.tenSP}
-                                    className="w-full h-56 object-contain mb-2 rounded"
-                                />
+                                <div className='relative'>
+                                    <img
+                                        src={product.imageUrl}
+                                        alt={product.tenSP}
+                                        className="w-full h-56 object-contain mb-2 rounded"
+                                    />
+
+                                    {/* Hết hàng */}
+                                    {product.soLuong === 0 && (
+                                        <span className="absolute top-0 left-0 h-6 w-24 bg-red-300 text-red-700 text-sm font-bold p-2 flex items-center justify-center">
+                                            Hết hàng
+                                        </span>
+                                    )}
+                                </div>
+
                                 <h3 className='h-12 my-2 text-sm'>{product.tenSP && product.tenSP.length > 58 ? product.tenSP.slice(0, 55) + '...' : product.tenSP}</h3>
                                 <div className='h-12 my-2'>
                                     <div className='flex items-center text-center'>

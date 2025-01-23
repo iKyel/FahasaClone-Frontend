@@ -1,6 +1,7 @@
 'use client'
 import Order_Status_Completed from '@/components/atoms/Order_Status_Completed';
 import Order_Status_Confirm from '@/components/atoms/Order_Status_Confirm';
+import Order_Status_Confirmed from '@/components/atoms/Order_Status_Confirmed';
 import Order_Status_Failed from '@/components/atoms/Order_Status_Failed';
 import { useOrder } from '@/contexts/AppContext'
 import { formatDate } from '@/utils/fommat_date';
@@ -21,9 +22,10 @@ const Orders = observer(() => {
 
     const orderOption = [
         { name: 'Tất cả', quantity: orderStore?.orders?.length },
-        { name: 'Chờ xác nhận', quantity: orderStore?.orders?.filter((order) => order.trangThaiDon === 'Chờ xác nhận').length },
-        { name: 'Hoàn thành', quantity: orderStore?.orders?.filter((order) => order.trangThaiDon === 'Hoàn thành').length },
-        { name: 'Đã hủy', quantity: orderStore?.orders?.filter((order) => order.trangThaiDon === 'Đã hủy').length }
+        { name: 'Chờ xác nhận', quantity: orderStore?.orders?.length ? orderStore?.orders?.filter((order) => order.trangThaiDon === 'Chờ xác nhận').length : 0 },
+        { name: 'Đã xác nhận', quantity: orderStore?.orders?.length ? orderStore?.orders?.filter((order) => order.trangThaiDon === 'Đã xác nhận').length : 0 },
+        { name: 'Hoàn thành', quantity: orderStore?.orders?.length ? orderStore?.orders?.filter((order) => order.trangThaiDon === 'Hoàn thành').length : 0 },
+        { name: 'Đã hủy', quantity: orderStore?.orders?.length ? orderStore?.orders?.filter((order) => order.trangThaiDon === 'Đã hủy').length : 0 }
     ]
 
     const deliveryList = [
@@ -37,6 +39,11 @@ const Orders = observer(() => {
     const handleCancelOrder = async (id: string) => {
         await orderStore?.cancelOrder(id);
     }
+
+    const handleCompleteOrder = async (id: string) => {
+        await orderStore?.completeOrder(id);
+    }
+
     if (!orderStore?.orders?.length) {
         return (
             <div className='h-screen flex flex-col items-center justify-center bg-white text-gray-500'>
@@ -68,16 +75,18 @@ const Orders = observer(() => {
                     filter((order) => currentOption === 'Tất cả' || order.trangThaiDon === currentOption).
                     map((order, index) => (
                         <div
-                            className='bg-white p-4 rounded-lg space-y-2 shadow-lg cursor-pointer'
+                            className='bg-white p-4 rounded-lg space-y-2 shadow-lg'
                             key={index}
-                            onClick={() => { router.push(`/customer/orders/${order._id}`) }}
+
                         >
                             <div
-                                className='flex justify-between mb-4'
+                                className='flex justify-between pb-4 cursor-pointer'
+                                onClick={() => { router.push(`/customer/orders/${order._id}`) }}
                             >
                                 <div className='space-x-2'>
                                     <span className='text-blue-500'>{order._id}</span>
                                     {order.trangThaiDon === 'Chờ xác nhận' && <Order_Status_Confirm />}
+                                    {order.trangThaiDon === 'Đã xác nhận' && <Order_Status_Confirmed />}
                                     {order.trangThaiDon === 'Hoàn thành' && <Order_Status_Completed />}
                                     {order.trangThaiDon === 'Đã hủy' && <Order_Status_Failed />}
                                 </div>
@@ -85,6 +94,7 @@ const Orders = observer(() => {
                                     <span>{formatDate(order.createdAt || '')}</span>
                                 </div>
                             </div>
+                            <div className='w-full p-1'></div>
                             <div className='flex justify-between items-end pt-2 border-t-2'>
                                 <div>
                                     <span>{order.soLuong || 0} sản phẩm</span>
@@ -95,13 +105,23 @@ const Orders = observer(() => {
                                             {(order.tongTien + (deliveryList.find((item) => order.ptVanChuyen === item.name)?.price || 0)).toLocaleString()}₫
                                         </span>
                                     </p>
-                                    <button
-                                        className={`px-16 py-2 rounded-lg text-sm mt-2 ${order.trangThaiDon === 'Chờ xác nhận' ? 'bg-red-700 text-white' : 'bg-white border-2 text-black cursor-not-allowed'}`}
-                                        onClick={() => handleCancelOrder(order._id)}
-                                        disabled={order.trangThaiDon !== 'Chờ xác nhận'}
-                                    >
-                                        Hủy đơn
-                                    </button>
+                                    <div>
+                                        <button
+                                            className={`px-16 py-2 rounded-lg text-sm mt-2 ${order.trangThaiDon === 'Chờ xác nhận' ? 'bg-red-700 text-white' : 'bg-white border-2 text-black cursor-not-allowed'}`}
+                                            onClick={() => handleCancelOrder(order._id)}
+                                            disabled={order.trangThaiDon !== 'Chờ xác nhận'}
+                                        >
+                                            Hủy đơn
+                                        </button>
+                                        <button
+                                            className={`ml-4 px-16 py-2 rounded-lg text-sm mt-2 ${order.trangThaiDon === 'Đã xác nhận' ? 'bg-green-700 text-white' : 'bg-white border-2 text-black cursor-not-allowed'}`}
+                                            onClick={() => handleCompleteOrder(order._id)}
+                                            disabled={order.trangThaiDon !== 'Đã xác nhận'}
+                                        >
+                                            Hoàn thành
+                                        </button>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

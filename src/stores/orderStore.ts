@@ -167,7 +167,7 @@ class OrderStore {
 
     async createOrder(diaChi: string, ptVanChuyen: string, ptThanhToan: string, ghiChu: string) {
         try {
-            const response = await api.post('api/order/createPaymentOrder', { diaChi, ptVanChuyen, ptThanhToan, ghiChu });
+            const response = await api.post('/api/order/createPaymentOrder', { diaChi, ptVanChuyen, ptThanhToan, ghiChu });
 
             if (response.data) {
                 return response.data;
@@ -183,7 +183,7 @@ class OrderStore {
 
     async getOrders() {
         try {
-            const response = await api.get('api/order/customerGetSaleInvokes');
+            const response = await api.get('/api/order/customerGetSaleInvokes');
 
             if (response.data) {
                 if (response.data.saleInvoices) {
@@ -204,7 +204,7 @@ class OrderStore {
 
     async getOrderDetail(id: string) {
         try {
-            const response = await api.get(`api/order/getSaleInvoikeDetail/${id}`);
+            const response = await api.get(`/api/order/getSaleInvoikeDetail/${id}`);
 
             if (response.data) {
                 if (response.data.saleInvoice) {
@@ -227,9 +227,52 @@ class OrderStore {
         }
     }
 
+    async updateOrderDetail(id: string, diaChiDatHang: string | null, ptVanChuyen: string | null) {
+        try {
+            if (diaChiDatHang) {
+                const response = await api.put(`/api/order/editOrder/${id}`, { diaChiDatHang });
+
+                if (response.data) {
+                    if (response.data.saleInvoice) {
+                        runInAction(() => {
+                            this.orders = [response.data.saleInvoice];
+                        })
+                    }
+
+                    if (response.data.detailSaleInvoices) {
+                        await orderDetailStore.getOrderDetail(response.data.detailSaleInvoices);
+                    }
+                    return response.data;
+                }
+            }
+            else if (ptVanChuyen) {
+                const response = await api.put(`/api/order/editOrder/${id}`, { ptVanChuyen });
+
+                if (response.data) {
+                    if (response.data.saleInvoice) {
+                        runInAction(() => {
+                            this.orders = [response.data.saleInvoice];
+                        })
+                    }
+
+                    if (response.data.detailSaleInvoices) {
+                        await orderDetailStore.getOrderDetail(response.data.detailSaleInvoices);
+                    }
+                    return response.data;
+                }
+            }
+
+        } catch (error) {
+            console.error("Lỗi sửa chi tiết đơn đặt", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+
     async cancelOrder(id: string) {
         try {
-            const response = await api.patch(`api/order/cancelOrder/${id}`);
+            const response = await api.patch(`/api/order/cancelOrder/${id}`);
 
             if (response.data) {
                 if (response.data.saleInvoices) {
@@ -249,7 +292,27 @@ class OrderStore {
         }
     }
 
+    async completeOrder(id: string) {
+        try {
+            const response = await api.patch(`/api/order/completeOrder/${id}`);
 
+            if (response.data) {
+                if (response.data.saleInvoices) {
+                    runInAction(() => {
+                        this.orders = response.data.saleInvoices;
+                    })
+                }
+
+                return response.data;
+            }
+
+        } catch (error) {
+            console.error("Lỗi xóa đơn đặt", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
 }
 
 
