@@ -34,7 +34,7 @@ const Setting_Number_Of_Products: React.FC<MyComponentProps> = ({ handleChange }
         }
     };
     const handleBlur = () => {
-        if (num === '') {
+        if (num === '' || num === '0') {
             setNum('1');
             handleChange(1);
         }

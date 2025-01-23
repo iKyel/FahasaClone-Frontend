@@ -22,7 +22,7 @@ const DetailProductInfo = observer(() => {
                         />
                         <DetailProductInfoProps
                             featureName='Tên nhà cung cấp'
-                            value={productStore?.productDetail?.tenSP}
+                            value={featureStore?.supplier?.ten}
                         />
                         {featureStore?.featureValue?.map((item, index) => (
                             <DetailProductInfoProps

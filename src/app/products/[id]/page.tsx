@@ -111,7 +111,7 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                             {featureStore?.supplier && (
                                 <div className="flex">
                                     <p className="text-gray-800">Nhà cung cấp: </p>
-                                    <p className="text-gray-900 font-bold">{featureStore?.supplier?.ten}</p>
+                                    <p className="text-gray-900 font-bold ml-2">{featureStore?.supplier?.ten}</p>
                                 </div>
                             )}
 
@@ -131,7 +131,7 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                         <div className="flex items-center gap-4">
                             <p className="text-3xl font-bold text-red-700">
                                 {productStore?.productDetail && productStore.productDetail.khuyenMai > 0
-                                    ? (productStore?.productDetail?.giaBan * (1 - productStore.productDetail.khuyenMai / 100)).toLocaleString()
+                                    ? (Math.round(productStore?.productDetail?.giaBan * (1 - productStore.productDetail.khuyenMai / 100))).toLocaleString()
                                     : productStore?.productDetail?.giaBan.toLocaleString()
                                 }₫
                             </p>
