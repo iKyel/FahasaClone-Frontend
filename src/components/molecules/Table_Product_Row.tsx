@@ -27,18 +27,27 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                             >
                                 <div className="flex">
                                     <div className='w-1/3 flex items-center'>
-                                        <input
-                                            type="checkbox"
-                                            checked={product.daChon}
-                                            onChange={() => handleSelectProduct(product._id)}
-                                            className="w-5 h-5 mx-3 "
-                                        />
-                                        <img
-                                            src={product.imageUrl}
-                                            alt={product.tenSP}
-                                            className="w-32 h-32 object-contain cursor-pointer"
-                                            onClick={() => router.push(`/products/${product.sanPhamId}`)}
-                                        />
+                                        <div className='w-1/4'>
+                                            {product.soLuong !== 0 && (
+                                                <input
+                                                    type="checkbox"
+                                                    checked={product.daChon}
+                                                    onChange={() => handleSelectProduct(product._id)}
+                                                    className="w-5 h-5 mx-3 "
+                                                />
+                                            )}
+                                        </div>
+                                        <div className='w-3/4'>
+                                            <img
+                                                src={product.imageUrl}
+                                                alt={product.tenSP}
+                                                className="w-32 h-32 object-contain cursor-pointer"
+                                                onClick={() => router.push(`/products/${product.sanPhamId}`)}
+                                            />
+                                        </div>
+
+
+
                                     </div>
 
                                     <div

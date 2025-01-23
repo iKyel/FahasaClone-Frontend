@@ -35,7 +35,7 @@ const Change_Address: React.FC<MyComponentProps> = ({ addressList, currentAddres
                         >Hủy
                         </button>
                         <button
-                            className={`py-2 px-20 rounded-lg text-white ${currentAddress !== selectedItem ? 'bg-red-700' : 'bg-red-400'}`}
+                            className={`ml-4 py-2 px-20 rounded-lg text-white ${currentAddress !== selectedItem ? 'bg-red-700' : 'bg-red-400'}`}
                             disabled={currentAddress === selectedItem}
                             onClick={() => handleSelectAddress(selectedItem, 'address')}
                         >

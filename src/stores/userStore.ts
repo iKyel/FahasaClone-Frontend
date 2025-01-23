@@ -102,6 +102,10 @@ class UserStore {
                 path: '/'
             });
 
+            runInAction(() => {
+                this.user = null;
+            })
+
             return { message: "Đăng xuất thành công" };
 
         } catch (error) {
