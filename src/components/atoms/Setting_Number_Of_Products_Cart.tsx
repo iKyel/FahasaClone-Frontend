@@ -27,16 +27,18 @@ const Setting_Number_Of_Products_Cart: React.FC<MyComponentProps> = ({ selectedQ
     //handleQuantityChange
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
-        if ((inputValue !== '' && parseInt(inputValue) <= 999 && /^\d*$/.test(inputValue))) {
+        console.log(inputValue);
+        if (inputValue === '') {
+            setNum(inputValue);
+        }
+        else if ((inputValue !== '' && parseInt(inputValue) <= 999 && /^\d*$/.test(inputValue)) || inputValue === '') {
             setNum(inputValue);
             handleChange(productId, parseInt(inputValue));
         }
-        else if (inputValue === '') {
-            setNum(inputValue);
-        }
+
     };
     const handleBlur = () => {
-        if (num === '') {
+        if (num === '' || num === '0') {
             setNum('1');
             handleChange(productId, 1);
         }

@@ -70,7 +70,7 @@ const OrderDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
             <div className='p-4 bg-white rounded-lg space-y-4'>
                 <div className='flex justify-between items-center'>
                     <div className='flex items-center'>
-                        <h3 className='font-bold mr-2 text-lg'>Mã đơn hàng {orderDetail._id}</h3>
+                        <h3 className='font-bold mr-2 text-lg'>Mã đơn hàng #{orderDetail._id}</h3>
                         {orderDetail.trangThaiDon === 'Chờ xác nhận' && <Order_Status_Confirm />}
                         {orderDetail.trangThaiDon === 'Đã xác nhận' && <Order_Status_Confirmed />}
                         {orderDetail.trangThaiDon === 'Hoàn thành' && <Order_Status_Completed />}
@@ -167,7 +167,7 @@ const OrderDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
 
             <div className='p-4 bg-white rounded-lg text-sm'>
                 <div className='flex items-center justify-between'>
-                    <h3 className='font-bold mr-2'>Mã đơn hàng {orderDetail._id}</h3>
+                    <h3 className='font-bold mr-2'>Mã đơn hàng #{orderDetail._id}</h3>
                     {orderDetail.trangThaiDon === 'Chờ xác nhận' && <Order_Status_Confirm />}
                     {orderDetail.trangThaiDon === 'Đã xác nhận' && <Order_Status_Confirmed />}
                     {orderDetail.trangThaiDon === 'Hoàn thành' && <Order_Status_Completed />}

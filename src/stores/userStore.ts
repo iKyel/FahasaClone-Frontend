@@ -52,7 +52,11 @@ class UserStore {
                 }
 
                 if (response.data.token) {
-                    nookies.set(null, 'token', response.data.token, { path: '/' });
+                    nookies.set(null, 'token', response.data.token, {
+                        maxAge: 30 * 24 * 60 * 60,
+                        path: '/',
+                        sameSite: 'strict'
+                    });
                 }
                 return response.data;
             }
@@ -94,10 +98,9 @@ class UserStore {
 
     async logout() {
         try {
-            nookies.destroy(null, 'token', { path: '/' });
-            runInAction(() => {
-                this.user = null;
-            })
+            nookies.destroy(null, 'token', {
+                path: '/'
+            });
 
             return { message: "Đăng xuất thành công" };
 

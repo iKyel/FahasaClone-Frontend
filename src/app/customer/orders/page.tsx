@@ -60,7 +60,7 @@ const Orders = observer(() => {
                 <div className='flex mt-4'>
                     {orderOption.map((item, index) => (
                         <div
-                            className={`w-1/4 pb-4 flex flex-col items-center hover:text-red-700 ${currentOption === item.name ? 'border-b-2 border-red-700 text-red-700' : ''}`}
+                            className={`w-1/4 pb-4 flex flex-col items-center hover:text-red-700 cursor-pointer ${currentOption === item.name ? 'border-b-2 border-red-700 text-red-700' : ''}`}
                             key={index}
                             onClick={() => setCurrentOption(item.name)}
                         >
@@ -84,7 +84,7 @@ const Orders = observer(() => {
                                 onClick={() => { router.push(`/customer/orders/${order._id}`) }}
                             >
                                 <div className='space-x-2'>
-                                    <span className='text-blue-500'>{order._id}</span>
+                                    <span className='text-blue-500'>#{order._id}</span>
                                     {order.trangThaiDon === 'Chờ xác nhận' && <Order_Status_Confirm />}
                                     {order.trangThaiDon === 'Đã xác nhận' && <Order_Status_Confirmed />}
                                     {order.trangThaiDon === 'Hoàn thành' && <Order_Status_Completed />}

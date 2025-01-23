@@ -37,6 +37,7 @@ const ProfilePage = observer(() => {
         hoDem: '',
         ten: '',
         sdt: '',
+        ngaySinh: ''
     });
 
     const [isClient, setIsClient] = useState(false);
@@ -67,8 +68,12 @@ const ProfilePage = observer(() => {
             newErrors.ten = usernameRegex.test(value) ? '' : 'Chỉ có thể dùng chữ, dấu cách và trong khoảng 2 đến 50 kí tự';
         }
         if (name === 'sdt') {
-            const usernameRegex = /^[0-9]{3,20}$/;
-            newErrors.sdt = usernameRegex.test(value) ? '' : 'Chỉ có thể dùng số trong khoảng 3 đến 20 kí tự';
+            const usernameRegex = /^[0-9]{9,11}$/;
+            newErrors.sdt = usernameRegex.test(value) ? '' : 'Chỉ có thể dùng số trong khoảng 9 đến 11 kí tự';
+        }
+        if (name === 'ngaySinh') {
+            const date = Date.parse(value)
+            newErrors.ngaySinh = date < Date.now() ? '' : 'Ngày sinh vượt quá thời điểm hiện tại';
         }
         setErrors(newErrors);
         compareFields(oldForm, form)
@@ -220,6 +225,7 @@ const ProfilePage = observer(() => {
                         value={form.ngaySinh}
                         onChange={handleChange}
                     />
+                    {errors.ngaySinh && (<p className="text-red-700 text-sm mt-1 text-center">{errors.ngaySinh}</p>)}
 
                     {isClient && <Button_Submit_Form
                         text='Lưu thay đổi'
