@@ -27,6 +27,7 @@ const Address_Option: React.FC<MyComponentProps> = ({ diaChi, selectedAddress, h
                 </div>
             ))
             }
+            {diaChi.length === 0 && (<p className='text-red-700'>*Vào trang thông tin cá nhân để thêm địa chỉ</p>)}
         </div>
     )
 }
