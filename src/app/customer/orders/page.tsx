@@ -80,7 +80,7 @@ const Orders = observer(() => {
 
                         >
                             <div
-                                className='flex justify-between pb-4 cursor-pointer'
+                                className='flex justify-between pb-6 cursor-pointer'
                                 onClick={() => { router.push(`/customer/orders/${order._id}`) }}
                             >
                                 <div className='space-x-2'>
@@ -94,8 +94,8 @@ const Orders = observer(() => {
                                     <span>{formatDate(order.createdAt || '')}</span>
                                 </div>
                             </div>
-                            <div className='w-full p-1'></div>
-                            <div className='flex justify-between items-end pt-2 border-t-2'>
+
+                            <div className='flex justify-between items-end pt-2 pb-4 border-t-2'>
                                 <div>
                                     <span>{order.soLuong || 0} sản phẩm</span>
                                 </div>
@@ -106,20 +106,26 @@ const Orders = observer(() => {
                                         </span>
                                     </p>
                                     <div>
-                                        <button
-                                            className={`px-16 py-2 rounded-lg text-sm mt-2 ${order.trangThaiDon === 'Chờ xác nhận' ? 'bg-red-700 text-white' : 'bg-white border-2 text-black cursor-not-allowed'}`}
-                                            onClick={() => handleCancelOrder(order._id)}
-                                            disabled={order.trangThaiDon !== 'Chờ xác nhận'}
-                                        >
-                                            Hủy đơn
-                                        </button>
-                                        <button
-                                            className={`ml-4 px-16 py-2 rounded-lg text-sm mt-2 ${order.trangThaiDon === 'Đã xác nhận' ? 'bg-green-700 text-white' : 'bg-white border-2 text-black cursor-not-allowed'}`}
-                                            onClick={() => handleCompleteOrder(order._id)}
-                                            disabled={order.trangThaiDon !== 'Đã xác nhận'}
-                                        >
-                                            Hoàn thành
-                                        </button>
+                                        {order.trangThaiDon === 'Chờ xác nhận' && (
+                                            <button
+                                                className={`px-16 py-2 rounded-lg text-sm mt-2 ${order.trangThaiDon === 'Chờ xác nhận' ? 'bg-red-700 text-white' : 'bg-white border-2 text-black cursor-not-allowed'}`}
+                                                onClick={() => handleCancelOrder(order._id)}
+                                                disabled={order.trangThaiDon !== 'Chờ xác nhận'}
+                                            >
+                                                Hủy đơn
+                                            </button>
+                                        )}
+
+                                        {order.trangThaiDon === 'Đã xác nhận' && (
+                                            <button
+                                                className={`ml-4 px-16 py-2 rounded-lg text-sm mt-2 ${order.trangThaiDon === 'Đã xác nhận' ? 'bg-green-700 text-white' : 'bg-white border-2 text-black cursor-not-allowed'}`}
+                                                onClick={() => handleCompleteOrder(order._id)}
+                                                disabled={order.trangThaiDon !== 'Đã xác nhận'}
+                                            >
+                                                Hoàn thành
+                                            </button>
+                                        )}
+
                                     </div>
 
                                 </div>

@@ -2,7 +2,7 @@ import api from "@/utils/axios_catch_error_token";
 import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import { makeAutoObservable, runInAction } from "mobx";
-import { destroyCookie } from "nookies";
+import nookies from "nookies";
 
 
 export interface IUser {
@@ -50,6 +50,10 @@ class UserStore {
                         this.user = response.data.user;
                     })
                 }
+
+                if (response.data.token) {
+                    nookies.set(null, 'token', response.data.token, { path: '/' });
+                }
                 return response.data;
             }
 
@@ -90,15 +94,13 @@ class UserStore {
 
     async logout() {
         try {
-            const response = await api.get('/api/account/logout');
+            nookies.destroy(null, 'token', { path: '/' });
+            runInAction(() => {
+                this.user = null;
+            })
 
-            if (response.data.message) {
-                destroyCookie(null, 'token');
-                // runInAction(() => {
-                //     this.user = null;
-                // })
-                return { message: "Đăng xuất thành công" };
-            }
+            return { message: "Đăng xuất thành công" };
+
         } catch (error) {
             console.log("Lỗi đăng xuất ", error);
             if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {

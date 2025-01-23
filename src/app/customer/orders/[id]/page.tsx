@@ -213,7 +213,7 @@ const OrderDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                         </div>
                     </div>
                 ))}
-                <div className='flex justify-end mr-12 mt-2'>
+                <div className='flex justify-end mr-12 mt-4'>
                     <div className='w-1/4 flex justify-between items-start'>
                         <div className='flex flex-col space-y-1'>
                             <p>Thành tiền</p>
