@@ -107,7 +107,7 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                         <h1 className="text-2xl mb-2">{productStore?.productDetail?.tenSP}</h1>
 
                         {/* Nhà cung cấp và thông tin */}
-                        <div className="grid grid-cols-2 gap-x-56 mb-4 text-sm">
+                        <div className="grid grid-cols-2 gap-x-32 mb-4 text-sm">
                             {featureStore?.supplier && (
                                 <div className="flex">
                                     <p className="text-gray-800">Nhà cung cấp: </p>
@@ -130,7 +130,10 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                         {/* Giá sản phẩm */}
                         <div className="flex items-center gap-4">
                             <p className="text-3xl font-bold text-red-700">
-                                {productStore?.productDetail?.giaBan ? productStore?.productDetail?.giaBan.toLocaleString() : 0}₫
+                                {productStore?.productDetail && productStore.productDetail.khuyenMai > 0
+                                    ? (productStore?.productDetail?.giaBan * (1 - productStore.productDetail.khuyenMai / 100)).toLocaleString()
+                                    : productStore?.productDetail?.giaBan.toLocaleString()
+                                }₫
                             </p>
                             {productStore?.productDetail && productStore.productDetail.khuyenMai > 0 && (
                                 <>
@@ -142,9 +145,13 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                                     </p>
                                 </>
                             )}
-
-
                         </div>
+
+                        {productStore?.productDetail?.soLuong === 0 && (
+                            <div className="text-red-700 mt-2">
+                                <p>*Sản phẩm đã hết hàng</p>
+                            </div>
+                        )}
                     </div>
 
                     {/* Số lượng */}

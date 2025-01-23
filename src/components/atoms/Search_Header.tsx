@@ -16,12 +16,13 @@ const Search_Header = () => {
     //handleSubmit
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (pathname === '/search') {
-            router.replace(`/search?searchName=${searchName}`);
-        } else {
-            router.push(`/search?searchName=${searchName}`);
+        if (searchName.length > 0) {
+            if (pathname === '/search') {
+                router.replace(`/search?searchName=${searchName}`);
+            } else {
+                router.push(`/search?searchName=${searchName}`);
+            }
         }
-
     }
     return (
         <form action="" onSubmit={handleSubmit}>

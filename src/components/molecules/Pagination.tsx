@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { ListValue } from '../organisms/SlideBar_Product';
 
@@ -10,10 +10,8 @@ interface ChildComponentProps {
 
 const Pagination = observer(({ setPagination, totalPage, selectedPage }: ChildComponentProps) => {
     const totalPages = totalPage ? parseInt(totalPage) : 1;
-    const [currentPage, setCurrentPage] = useState(parseInt(selectedPage));
 
     const handlePageChange = (page: number) => {
-        setCurrentPage(page);
         setPagination({ page: page.toString() });
     };
 
@@ -26,54 +24,54 @@ const Pagination = observer(({ setPagination, totalPage, selectedPage }: ChildCo
                     <button
                         key={i}
                         onClick={() => handlePageChange(i)}
-                        className={`px-4 py-2 mx-1 rounded ${currentPage === i ? 'bg-red-700 text-white' : 'bg-white text-black'}`}
+                        className={`px-4 py-2 mx-1 rounded ${parseInt(selectedPage) === i ? 'bg-red-700 text-white' : 'bg-white text-black'}`}
                     >
                         {i}
                     </button>
                 );
             }
         } else {
-            if (currentPage >= 1) {
+            if (parseInt(selectedPage) >= 1) {
                 pages.push(
                     <button
                         key={1}
                         onClick={() => handlePageChange(1)}
-                        className={`px-4 py-2 mx-1 rounded ${currentPage === 1 ? 'bg-red-700 text-white' : 'bg-white text-black'}`}
+                        className={`px-4 py-2 mx-1 rounded ${parseInt(selectedPage) === 1 ? 'bg-red-700 text-white' : 'bg-white text-black'}`}
                     >
                         1
                     </button>
                 );
             }
 
-            if (currentPage > 2) {
+            if (parseInt(selectedPage) > 2) {
                 pages.push(<span key="ellipsis" className="mx-1">...</span>);
             }
 
-            const start = Math.max(2, currentPage - 1);
-            const end = Math.min(totalPages - 1, currentPage + 1);
+            const start = Math.max(2, parseInt(selectedPage) - 1);
+            const end = Math.min(totalPages - 1, parseInt(selectedPage) + 1);
 
             for (let i = start; i <= end; i++) {
                 pages.push(
                     <button
                         key={i}
                         onClick={() => handlePageChange(i)}
-                        className={`px-4 py-2 mx-1 rounded ${currentPage === i ? 'bg-red-700 text-white' : 'bg-white text-black'}`}
+                        className={`px-4 py-2 mx-1 rounded ${parseInt(selectedPage) === i ? 'bg-red-700 text-white' : 'bg-white text-black'}`}
                     >
                         {i}
                     </button>
                 );
             }
 
-            if (currentPage < totalPages - 1) {
+            if (parseInt(selectedPage) < totalPages - 1) {
                 pages.push(<span key="ellipsis-end" className="mx-1">...</span>);
             }
 
-            if (currentPage <= totalPages) {
+            if (parseInt(selectedPage) <= totalPages) {
                 pages.push(
                     <button
                         key={totalPages}
                         onClick={() => handlePageChange(totalPages)}
-                        className={`px-4 py-2 mx-1 rounded ${currentPage === totalPages ? 'bg-red-700 text-white' : 'bg-white text-black'}`}
+                        className={`px-4 py-2 mx-1 rounded ${parseInt(selectedPage) === totalPages ? 'bg-red-700 text-white' : 'bg-white text-black'}`}
                     >
                         {totalPages}
                     </button>

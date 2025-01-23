@@ -22,6 +22,7 @@ const Products = observer(() => {
 
     // Lấy các giá trị từ URL
     const selectedCategory = searchParams.get('category') || 'all-categories';
+
     const selectedPrice = searchParams.get('price') || null;
     let priceValue = null;
     if (selectedPrice === '0-150000') priceValue = '0đ - 150,000đ';
@@ -33,6 +34,7 @@ const Products = observer(() => {
     const selectedSupplier = searchParams.get('supplier') || null;
     const selectedOrder = searchParams.get('orderBy') || 'Mới nhất';
     const selectedPage = searchParams.get('pageNum') || '1';
+    console.log(selectedPage);
     const featuresQuery: Record<string, string | null> = {};
     searchParams.forEach((value, key) => {
         if (!['category', 'price', 'supplier', 'orderBy', 'pageNum'].includes(key)) {

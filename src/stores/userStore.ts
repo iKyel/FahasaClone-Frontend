@@ -94,9 +94,9 @@ class UserStore {
 
             if (response.data.message) {
                 destroyCookie(null, 'token');
-                runInAction(() => {
-                    this.user = null;
-                })
+                // runInAction(() => {
+                //     this.user = null;
+                // })
                 return { message: "Đăng xuất thành công" };
             }
         } catch (error) {

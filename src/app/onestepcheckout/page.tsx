@@ -19,7 +19,6 @@ const deliveryList = [
 ];
 
 const paymentList = [
-    { name: 'Thanh toán bằng PayPal', value: 'PayPal' },
     { name: 'Thanh toán bằng tiền mặt khi nhận hàng', value: 'COD' },
 ]
 

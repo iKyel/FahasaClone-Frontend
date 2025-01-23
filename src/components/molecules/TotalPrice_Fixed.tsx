@@ -9,15 +9,6 @@ interface MyComponentProps {
     handleSubmit: () => void;
 }
 
-//Options Paypal
-const optionsPaypal = {
-    clientId: "AWa7Z_Uj81NjV36f1oB9aw3GWj7ab0ztxnqBbuUAa044LNRcowbZNVR6SmMO_oMcdy4DYx3Qbd2ZHQdc",
-    currency: "USD",
-    intent: "capture",
-    "disable-funding": "card",
-
-}
-
 const TotalPrice_Fixed: React.FC<MyComponentProps> = ({ totalPrice, delivery, payment, handleSubmit }) => {
 
 
@@ -44,43 +35,12 @@ const TotalPrice_Fixed: React.FC<MyComponentProps> = ({ totalPrice, delivery, pa
                 </div>
             </div>
             <div className='w-5/6 py-3 flex justify-end'>
-                {payment.value === 'PayPal'
-                    ? (
-                        <div className='w-1/4'>
-                            <PayPalScriptProvider options={optionsPaypal}>
-                                <PayPalButtons
-                                    style={{
-                                        shape: "rect",
-                                        layout: "vertical",
-                                        color: "gold",
-                                        label: "buynow",
-                                    }}
-                                    createOrder={(data, actions) => {
-                                        return actions.order.create({
-                                            intent: "CAPTURE",
-                                            purchase_units: [{
-                                                amount: {
-                                                    currency_code: "USD",
-                                                    value: `${Math.round(((totalPrice + delivery.price) / 24000) * 100) / 100}`
-                                                }
-                                            }]
-                                        })
-                                    }}
-                                    onApprove={handleApprove}
-                                />
-                            </PayPalScriptProvider>
-                        </div>
-
-                    )
-                    : (
-                        <button
-                            className='py-2 px-16 bg-red-700 text-white font-bold text-lg rounded-lg'
-                            onClick={handleSubmit}
-                        >
-                            Xác nhận thanh toán
-                        </button>
-                    )}
-
+                <button
+                    className='py-2 px-16 bg-red-700 text-white font-bold text-lg rounded-lg'
+                    onClick={handleSubmit}
+                >
+                    Xác nhận thanh toán
+                </button>
             </div>
         </div>
     )

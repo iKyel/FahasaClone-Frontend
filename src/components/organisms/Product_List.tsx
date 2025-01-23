@@ -15,7 +15,7 @@ const Product_List: React.FC<ProductListProps> = ({ products }) => {
                     products.map((product, index) => (
                         <div
                             key={index}
-                            className="hover:shadow-lg hover:border-2 p-2 cursor-pointer"
+                            className="hover:shadow-lg outline outline-transparent hover:outline-2 hover:outline-gray-200 p-2 cursor-pointer"
                             onClick={() => { router.push(`/products/${product._id}`) }}
                         >
                             <div className="relative">
@@ -57,7 +57,6 @@ const Product_List: React.FC<ProductListProps> = ({ products }) => {
                 )}
             </div>
         </div>
-
     );
 };
 

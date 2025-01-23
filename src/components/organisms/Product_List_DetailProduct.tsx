@@ -16,7 +16,7 @@ const Product_List_DetailProduct: React.FC<ProductListProps> = ({ products }) =>
                     products.map((product, index) => (
                         <div
                             key={index}
-                            className="hover:shadow-lg hover:border-2 p-2 cursor-pointer"
+                            className="hover:shadow-lg outline outline-transparent hover:outline-2 hover:outline-gray-200 p-2 cursor-pointer"
                             onClick={() => { router.push(`/products/${product._id}`) }}
                         >
                             <div className="relative">
@@ -31,6 +31,14 @@ const Product_List_DetailProduct: React.FC<ProductListProps> = ({ products }) =>
                                         -{product.khuyenMai}%
                                     </span>
                                 )}
+
+                                {/* Hết hàng */}
+                                {product.soLuong === 0 && (
+                                    <span className="absolute top-0 left-0 h-6 w-24 bg-red-300 text-red-700 text-sm font-bold p-2 flex items-center justify-center">
+                                        Hết hàng
+                                    </span>
+                                )}
+
                             </div>
                             <h3 className='h-12 my-2'>{product.tenSP && product.tenSP.length > 54 ? product.tenSP.slice(0, 51) + '...' : product.tenSP}</h3>
                             <div className='h-12 my-2'>
