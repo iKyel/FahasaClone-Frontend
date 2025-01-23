@@ -44,8 +44,8 @@ export default function RootLayout({
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F0F0F0]`}
-        // data-new-gr-c-s-check-loaded="14.1092.0"
-        data-new-gr-c-s-check-loaded="14.1217.0"
+        data-new-gr-c-s-check-loaded="14.1092.0"
+        // data-new-gr-c-s-check-loaded="14.1217.0"
         data-gr-ext-installed=""
         cz-shortcut-listen="true"
       >
