@@ -34,7 +34,7 @@ const NavBar_Desktop = observer(() => {
         setActiveCategory(categoryId);
     };
 
-    const handleClick = (id: string) => {
+    const handleClickCategory = (id: string) => {
         setIsHovered(false);
         router.push(`/products?category=${id}`)
     }
@@ -42,7 +42,7 @@ const NavBar_Desktop = observer(() => {
     return (
         <div className="hidden md:block">
             <div
-                className="flex justify-center items-center pl-16 py-3"
+                className="flex justify-center items-center pl-8 py-3"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
@@ -55,7 +55,7 @@ const NavBar_Desktop = observer(() => {
 
                 {/* Danh mục sản phẩm */}
                 {isHovered && isClient && (
-                    <div className="absolute top-16 right-0 z-50 w-full p-2 py-10 bg-white border rounded shadow-lg">
+                    <div className="absolute top-16 right-0 z-50 w-full p-4 py-8 bg-white border rounded shadow-lg">
                         <div className="flex">
                             {/* Danh sách danh mục bên trái */}
                             <div className="w-1/4 border-r p-2">
@@ -67,7 +67,7 @@ const NavBar_Desktop = observer(() => {
                                             className={`p-4 cursor-pointer rounded-lg hover:bg-gray-200 font-bold ${activeCategory === category._id ? 'bg-gray-200' : ''
                                                 }`}
                                             onMouseEnter={() => handleCategoryHover(category._id)}
-                                            onClick={() => { handleClick(category._id) }}
+                                            onClick={() => { handleClickCategory(category._id) }}
                                         >
                                             {category.ten}
                                         </li>
@@ -89,13 +89,13 @@ const NavBar_Desktop = observer(() => {
                                                         key={index}
                                                         className="cursor-pointer"
                                                     >
-                                                        <h3 className="font-semibold mb-2" onClick={() => { handleClick(category2._id) }}>{category2.ten}</h3>
+                                                        <h3 className="font-semibold mb-2" onClick={() => { handleClickCategory(category2._id) }}>{category2.ten}</h3>
                                                         <ul>
                                                             {category2.children?.map((category3, index) => index < 5 && (
                                                                 <li
                                                                     key={index}
                                                                     className="cursor-pointer hover:text-yellow-600 text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap"
-                                                                    onClick={() => { handleClick(category3._id) }}
+                                                                    onClick={() => { handleClickCategory(category3._id) }}
                                                                 >
                                                                     {category3.ten}
                                                                 </li>
@@ -103,7 +103,7 @@ const NavBar_Desktop = observer(() => {
                                                             {category2.children && category2.children.length > 5 && (
                                                                 <li
                                                                     className='cursor-pointer text-blue-500'
-                                                                    onClick={() => { handleClick(category2._id) }}
+                                                                    onClick={() => { handleClickCategory(category2._id) }}
                                                                 >
                                                                     Xem tất cả
                                                                 </li>

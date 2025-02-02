@@ -1,7 +1,6 @@
 'use client'
 
 import Banner_Home from '@/components/atoms/Banner_Home'
-import Product_Categories from '@/components/atoms/Product_Categories'
 import Product_List_5_Items from '@/components/atoms/Product_List_5_Items'
 import Product_Outstanding from '@/components/atoms/Product_Outstanding'
 import { observer } from 'mobx-react-lite'
@@ -31,12 +30,12 @@ const outstanding_list_3 = [
 const Home = observer(() => {
 
   return (
-    <div className='my-4 space-y-4'>
+    <div className='md:my-4 space-y-4'>
       <Banner_Home />
 
-      <Product_Categories />
+      {/* <Product_Categories /> */}
 
-      <div className='flex justify-between space-x-2'>
+      <div className='grid grid-cols-2 md:grid-cols-4 gap-2'>
         {outstanding_list_1.map((item, index) => (
           <Product_Outstanding
             list={item}
@@ -48,10 +47,10 @@ const Home = observer(() => {
       <Product_List_5_Items
         icon='/images/home/ico_sachtrongnuoc.svg'
         title='Sách Tiếng Việt'
-        categoryId={['677fc22402c44b15ec07095e', '677fc20102c44b15ec07095a', '677fc23002c44b15ec070960']}
+        categoryId={['679f26a8cc89f8a3538d64ac', '677fc20102c44b15ec07095a', '677fc23002c44b15ec070960']}
       />
 
-      <div className='flex justify-between space-x-2'>
+      <div className='grid grid-cols-2 md:grid-cols-4 gap-2'>
         {outstanding_list_2.map((item, index) => (
           <Product_Outstanding
             list={item}
@@ -66,7 +65,7 @@ const Home = observer(() => {
         categoryId={['677fc23a02c44b15ec070962', '6780ecf729a4815a5e3dc318', '6780ed0029a4815a5e3dc31b']}
       />
 
-      <div className='flex justify-between space-x-2'>
+      <div className='grid grid-cols-2 md:grid-cols-4 gap-2'>
         {outstanding_list_3.map((item, index) => (
           <Product_Outstanding
             list={item}

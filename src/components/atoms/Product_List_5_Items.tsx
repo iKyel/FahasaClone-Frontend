@@ -33,17 +33,17 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
         fetchData();
     }, [selectedCat]);
 
-    const ITEMS_PER_PAGE = 5;
+    const ITEMS_PER_PAGE = window.innerWidth >= 768 ? 5 : 2;
     const [currentIndex, setCurrentIndex] = useState(0);
 
 
     const handleNext = () => {
-        if (products && currentIndex + ITEMS_PER_PAGE < products.length - 5) {
+        if (products && currentIndex + ITEMS_PER_PAGE < products.length - ITEMS_PER_PAGE) {
             console.log(products);
             setCurrentIndex((prevIndex) => prevIndex + ITEMS_PER_PAGE);
         }
         else {
-            setCurrentIndex(products.length - 5);
+            setCurrentIndex(products.length - ITEMS_PER_PAGE);
         }
     };
 
@@ -63,21 +63,25 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
                 <h3 className='text-xl font-bold'>{title}</h3>
             </div>
             <div className='flex items-center justify-start border-b-2 space-x-8'>
-                {categories.map((category, index) => (
+                {categories.map((category, index) =>
+                (category && (
                     <div
                         onClick={() => setSelectedCat(category._id)}
                         key={index}
-                        className={`text-sm font-bold cursor-pointer ml-4 py-2 ${selectedCat === category._id ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}`}>
+                        className={`text-sm font-bold cursor-pointer ml-4 py-2 ${selectedCat === category._id ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}`}
+                    >
                         {category.ten}
                     </div>
-                ))}
+                ))
+
+                )}
             </div>
             <div className='relative p-5 w-full'>
-                <div className="overflow-hidden">
+                <div className="overflow-hidden overflow-x-visible lg:overflow-x-hidden">
                     <div
-                        className="flex transition-transform duration-500"
+                        className="flex transition-transform duration-500 md:justify-start md:space-x-4"
                         style={{
-                            transform: `translate3d(-${244 * currentIndex}px, 0, 0)`,
+                            transform: `translate3d(-${window.innerWidth / 25 * 4 * currentIndex}px, 0, 0)`,
                             width: `${(products.length / ITEMS_PER_PAGE) * 100}%`, // Tổng chiều rộng
                         }}
                     >
@@ -102,15 +106,18 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
                                     )}
                                 </div>
 
-                                <h3 className='h-12 my-2 text-sm'>{product.tenSP && product.tenSP.length > 58 ? product.tenSP.slice(0, 55) + '...' : product.tenSP}</h3>
+                                <div className='h-12 my-2 text-sm'>
+                                    <h3>{product.tenSP && product.tenSP.length > 28 ? product.tenSP.slice(0, 28) + '...' : product.tenSP}</h3>
+                                </div>
+
                                 <div className='h-12 my-2'>
                                     <div className='flex items-center text-center'>
                                         <p className='font-bold text-lg text-red-700'>
                                             {product.giaBan ? Math.round(product.giaBan * (1 - product.khuyenMai / 100)).toLocaleString() : '0'}₫
                                         </p>
                                         {product.khuyenMai > 0 && (
-                                            <span className='ml-2 p-1 rounded-md text-sm bg-red-700 text-white '>
-                                                {product.khuyenMai}%
+                                            <span className='ml-3 p-1 rounded-md text-sm bg-red-700 text-white '>
+                                                -{product.khuyenMai}%
                                             </span>
                                         )}
                                     </div>
@@ -125,7 +132,7 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
                         ))}
                     </div>
                 </div>
-                <div>
+                <div className='hidden lg:block'>
                     <div
                         className={`${currentIndex === 0 || products.length < 6 ? 'hidden' : 'block'} absolute top-1/2 -translate-y-1/2 -left-4 bg-white px-4 py-2 rounded-full shadow-lg`}
                         onClick={handlePrev}
