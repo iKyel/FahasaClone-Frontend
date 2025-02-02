@@ -10,8 +10,8 @@ interface MyComponentProps {
 
 const Input_And_Label_Profile: React.FC<MyComponentProps> = ({ text, placeholder, type, id, value, onChange }) => {
     return (
-        <div className="mt-4 mb-2 text-sm flex items-center">
-            <label htmlFor={id} className="w-1/5 block pl-1 font-medium">
+        <div className="mt-4 mb-2 text-sm md:flex items-center">
+            <label htmlFor={id} className="md:w-1/5 w-full block pl-1 font-medium">
                 {text}
             </label>
             <input

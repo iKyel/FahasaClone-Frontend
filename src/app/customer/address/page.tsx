@@ -36,38 +36,42 @@ const ChangeAddress = observer(() => {
                 <h3 className="text-lg">Sổ địa chỉ</h3>
                 <a className='text-sm text-blue-500' href="/customer/address/new">+ Thêm địa chỉ mới</a>
             </div>
-            {userStore && userStore.user && userStore.user.diaChi && userStore.user.diaChi.map((item, index) => {
-                if (index === 0)
-                    return (
-                        <div key={index}>
-                            <h4 className='font-bold border-b-2 mb-2'>Địa chỉ mặc định</h4>
-                            <p>{item}</p>
-                            <h4 className='font-bold border-b-2 mb-2 mt-6'>Địa chỉ khác</h4>
-                        </div>
-                    )
-
-                else {
-                    return (
-                        <div key={index} className='flex justify-between items-center'>
-                            <p className='mb-2'>{item}</p>
-                            <div>
-                                <span
-                                    onClick={() => { handleSetDefautAddress(index) }}
-                                    className='mr-1 text-blue-500 text-sm cursor-pointer'
-                                >
-                                    Đặt làm mặc định
-                                </span>
-                                |
-                                <i
-                                    onClick={() => { handleDeleteAddress(index) }}
-                                    className="fa-regular fa-trash-can ml-1 cursor-pointer"
-                                >
-                                </i>
+            {userStore && userStore.user && userStore.user.diaChi && userStore.user.diaChi.length > 0
+                ? userStore.user.diaChi.map((item, index) => {
+                    if (index === 0)
+                        return (
+                            <div key={index}>
+                                <h4 className='font-bold border-b-2 mb-2'>Địa chỉ mặc định</h4>
+                                <p>{item}</p>
+                                <h4 className='font-bold border-b-2 mb-2 mt-6'>Địa chỉ khác</h4>
                             </div>
-                        </div>
-                    )
-                }
-            })
+                        )
+
+                    else {
+                        return (
+                            <div key={index} className='md:flex justify-between items-center'>
+                                <p className='mb-2'>{item}</p>
+                                <div>
+                                    <span
+                                        onClick={() => { handleSetDefautAddress(index) }}
+                                        className='mr-1 text-blue-500 text-sm cursor-pointer'
+                                    >
+                                        Đặt làm mặc định
+                                    </span>
+                                    |
+                                    <i
+                                        onClick={() => { handleDeleteAddress(index) }}
+                                        className="fa-regular fa-trash-can ml-1 cursor-pointer"
+                                    >
+                                    </i>
+                                </div>
+                            </div>
+                        )
+                    }
+                })
+                : (
+                    <div className='opacity-70 text-sm'>Không có địa chỉ nào!</div>
+                )
             }
             <Modal
                 isOpen={isModalOpen}

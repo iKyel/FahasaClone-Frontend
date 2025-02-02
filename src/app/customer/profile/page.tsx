@@ -145,8 +145,8 @@ const ProfilePage = observer(() => {
 
                     {errors.ten && (<p className="text-red-700 text-sm mt-1 text-center">{errors.ten}</p>)}
 
-                    <div className="mt-4 mb-2 text-sm flex items-center">
-                        <label htmlFor='username' className="w-1/5 block pl-1 font-medium">
+                    <div className="mt-4 mb-2 text-sm md:flex items-center">
+                        <label htmlFor='username' className="md:w-1/5 w-full block pl-1 font-medium">
                             Tên đăng nhập
                         </label>
                         <input
@@ -179,7 +179,7 @@ const ProfilePage = observer(() => {
                         onChange={handleChange}
                     />
 
-                    <div className="mt-4 mb-2 text-sm flex items-center">
+                    <div className="mt-4 mb-2 text-sm md:flex items-center">
                         <label className="w-1/5 block pl-1 font-medium">
                             Giới tính
                         </label>

@@ -37,7 +37,7 @@ const Sidebar = observer(() => {
     }
 
     return (
-        <div className="w-1/4 bg-white mr-4 px-4 py-6 rounded-lg shadow ">
+        <div className="md:w-1/4 w-full bg-white mr-4 px-4 py-6 rounded-lg shadow ">
             <Name_User_Profile />
 
             <ul className="space-y-4 mt-2 text-sm">
