@@ -19,6 +19,7 @@ const Products = observer(() => {
 
     const [isClient, setIsClient] = useState(false);
     const [totalPage, setTotalPage] = useState('1');
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     // Lấy các giá trị từ URL
     const selectedCategory = searchParams.get('category') || 'all-categories';
@@ -97,74 +98,112 @@ const Products = observer(() => {
 
     return (
         <>
-            {isClient
-                ? (
-                    <div className='flex items-start'>
-                        {/* Sidebar */}
-                        <div className='w-1/4 bg-white mr-4 p-2 pb-8 rounded-lg shadow text-sm'>
-                            {categoryStore?.categories && (
-                                <SlideBar_Product
-                                    categories={categoryStore.categories}
-                                    features={featureStore?.featureListValue || []}
-                                    suppliers={featureStore?.supplierList || []}
-                                    selectedCategory={selectedCategory}
-                                    selectedPrice={priceValue}
-                                    selectedSupplier={selectedSupplier}
-                                    selectedFeatures={featuresQuery}
-                                    handleFilter={handleFilterChange}
-                                />
-                            )}
-                        </div>
-
-                        <div className='w-3/4 bg-white py-4 rounded-lg shadow text-sm'>
-                            {/* Sắp xếp */}
-                            <div className="flex items-center mx-2 mb-2 py-4 border-b-2">
-                                <h3 className='ml-6 text-base'>Sắp xếp theo : </h3>
-                                <select
-                                    value={selectedOrder}
-                                    onChange={(e) => handleFilterChange({ orderBy: e.target.value })}
-                                    className="border-2 rounded py-2 px-4 ml-2"
-                                >
-                                    <option value="Giá tăng dần">Giá tăng dần</option>
-                                    <option value="Giá giảm dần">Giá giảm dần</option>
-                                    <option value="A-Z">Từ A - Z</option>
-                                    <option value="Z-A">Từ Z - A</option>
-                                    <option value="Mới nhất">Mới nhất</option>
-                                    <option value="Cũ nhất">Cũ nhất</option>
-                                </select>
-                            </div>
-
-                            {/* Danh sách sách */}
-                            {productStore?.products && productStore.products.length > 0
-                                ? (
-                                    <>
-                                        <Product_List products={productStore.products} />
-                                        {/* Phân trang */}
-                                        <div className="flex justify-center mt-8">
-                                            <Pagination
-                                                setPagination={handleFilterChange}
-                                                totalPage={totalPage}
-                                                selectedPage={selectedPage || '1'}
-                                            />
-                                        </div>
-                                    </>
-                                )
-                                : (
-                                    <div className='p-2'>
-                                        <p className='p-4 bg-yellow-200 border-yellow-500 border-2 font-bold'>Không tìm thấy sản phẩm phù hợp nào !</p>
-                                    </div>
-                                )
-                            }
-                        </div>
+            {isClient ? (
+                <div className='flex flex-col md:flex-row items-start'>
+                    {/* Sidebar cho màn hình lớn */}
+                    <div className='hidden md:block w-1/4 bg-white mr-4 p-2 pb-8 rounded-lg shadow text-sm'>
+                        {categoryStore?.categories && (
+                            <SlideBar_Product
+                                categories={categoryStore.categories}
+                                features={featureStore?.featureListValue || []}
+                                suppliers={featureStore?.supplierList || []}
+                                selectedCategory={selectedCategory}
+                                selectedPrice={priceValue}
+                                selectedSupplier={selectedSupplier}
+                                selectedFeatures={featuresQuery}
+                                handleFilter={handleFilterChange}
+                            />
+                        )}
                     </div>
-                )
-                : (
-                    <div>Đang tải...</div>
-                )
-            }
+
+                    {/* Phần chính (Danh sách sản phẩm) */}
+                    <div className='w-full md:w-3/4 bg-white py-4 rounded-lg shadow text-sm'>
+                        {/* Thanh sắp xếp và Bộ lọc trên Mobile */}
+                        <div className="flex items-center justify-between mx-2 mb-2 py-4 border-b-2">
+                            <h3 className='ml-6 text-base'>Sắp xếp:</h3>
+                            <select
+                                value={selectedOrder}
+                                onChange={(e) => handleFilterChange({ orderBy: e.target.value })}
+                                className="border-2 rounded py-2 px-4 ml-2"
+                            >
+                                <option value="Giá tăng dần">Giá tăng dần</option>
+                                <option value="Giá giảm dần">Giá giảm dần</option>
+                                <option value="A-Z">Từ A - Z</option>
+                                <option value="Z-A">Từ Z - A</option>
+                                <option value="Mới nhất">Mới nhất</option>
+                                <option value="Cũ nhất">Cũ nhất</option>
+                            </select>
+
+                            {/* Nút Bộ Lọc cho Mobile */}
+                            <button
+                                className="md:hidden border border-black px-4 py-2 rounded ml-4"
+                                onClick={() => setIsFilterOpen(true)}
+                            >
+                                Bộ lọc
+                            </button>
+                        </div>
+
+                        {/* Danh sách sản phẩm */}
+                        {productStore?.products && productStore.products.length > 0 ? (
+                            <>
+                                <Product_List products={productStore.products} />
+                                <div className="flex justify-center mt-8">
+                                    <Pagination
+                                        setPagination={handleFilterChange}
+                                        totalPage={totalPage}
+                                        selectedPage={selectedPage || '1'}
+                                    />
+                                </div>
+                            </>
+                        ) : (
+                            <div className='p-2'>
+                                <p className='p-4 bg-yellow-200 border-yellow-500 border-2 font-bold'>
+                                    Không tìm thấy sản phẩm phù hợp nào!
+                                </p>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Modal Bộ lọc trên Mobile */}
+                    {isFilterOpen && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end md:hidden">
+                            <div className="w-full bg-white rounded-t-lg p-4 shadow-lg h-5/6 flex flex-col">
+                                {/* Header */}
+                                <div className="flex justify-between items-center mb-4">
+                                    <h3 className="text-lg font-semibold">Bộ lọc</h3>
+                                    <button
+                                        className="text-red-500 text-xl"
+                                        onClick={() => setIsFilterOpen(false)}
+                                    >
+                                        &times;
+                                    </button>
+                                </div>
+
+                                {/* Nội dung bộ lọc (cuộn được) */}
+                                <div className="flex-1 overflow-y-auto">
+                                    {categoryStore?.categories && (
+                                        <SlideBar_Product
+                                            categories={categoryStore.categories}
+                                            features={featureStore?.featureListValue || []}
+                                            suppliers={featureStore?.supplierList || []}
+                                            selectedCategory={selectedCategory}
+                                            selectedPrice={priceValue}
+                                            selectedSupplier={selectedSupplier}
+                                            selectedFeatures={featuresQuery}
+                                            handleFilter={handleFilterChange}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+            ) : (
+                <div>Đang tải...</div>
+            )}
         </>
     );
-
 });
 
 export default Products;

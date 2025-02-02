@@ -52,7 +52,7 @@ const Header = () => {
                     <Logo style="w-36 mx-auto pt-2 transition-all duration-300" src="/images/fahasa-logo.png" />
                 </div>
 
-                <div className={`w-full z-50 flex justify-around items-center bg-[#C92127] transition-all duration-300 ${isScrolled ? 'fixed top-0 left-0 shadow-md' : 'sticky top-0'}`}>
+                <div className={`w-full z-40 flex justify-around items-center bg-[#C92127] transition-all duration-300 ${isScrolled ? 'fixed top-0 left-0 shadow-md' : 'sticky top-0'}`}>
                     <NavBar />
 
                     <div className="w-4/5 p-2">

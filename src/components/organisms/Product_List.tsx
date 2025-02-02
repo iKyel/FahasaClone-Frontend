@@ -10,7 +10,7 @@ const Product_List: React.FC<ProductListProps> = ({ products }) => {
     const router = useRouter();
     return (
         <div>
-            <div className='grid grid-cols-4 gap-2'>
+            <div className='grid md:grid-cols-4 grid-cols-2 gap-2'>
                 {products && products.length > 0 ? (
                     products.map((product, index) => (
                         <div
@@ -38,7 +38,7 @@ const Product_List: React.FC<ProductListProps> = ({ products }) => {
                                     </span>
                                 )}
                             </div>
-                            <h3 className='h-12 my-2'>{product.tenSP && product.tenSP.length > 58 ? product.tenSP.slice(0, 55) + '...' : product.tenSP}</h3>
+                            <h3 className='h-12 my-2'>{product.tenSP && product.tenSP.length > 30 ? product.tenSP.slice(0, 30) + '...' : product.tenSP}</h3>
                             <div className='h-12 my-2'>
                                 <p className='font-bold text-lg text-red-700'>
                                     {product.giaBan ? Math.round(product.giaBan * (1 - product.khuyenMai / 100)).toLocaleString() : '0'}₫
