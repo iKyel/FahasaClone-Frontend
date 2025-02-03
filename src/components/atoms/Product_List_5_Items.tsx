@@ -33,7 +33,7 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
         fetchData();
     }, [selectedCat]);
 
-    const ITEMS_PER_PAGE = window.innerWidth >= 768 ? 5 : 2;
+    const ITEMS_PER_PAGE = typeof window !== "undefined" && window.innerWidth >= 768 ? 5 : 2;
     const [currentIndex, setCurrentIndex] = useState(0);
 
 
@@ -81,7 +81,7 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
                     <div
                         className="flex transition-transform duration-500 md:justify-start md:space-x-4"
                         style={{
-                            transform: `translate3d(-${window.innerWidth / 25 * 4 * currentIndex}px, 0, 0)`,
+                            transform: `translate3d(-${typeof window !== "undefined" ? window.innerWidth / 25 * 4 * currentIndex : 0}px, 0, 0)`,
                             width: `${(products.length / ITEMS_PER_PAGE) * 100}%`, // Tổng chiều rộng
                         }}
                     >

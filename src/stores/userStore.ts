@@ -128,6 +128,7 @@ class UserStore {
                         this.user = response.data.user;
                     })
                 }
+                orderStore.getCart();
                 return response.data;
             }
 
