@@ -60,7 +60,7 @@ const Orders = observer(() => {
                 <div className='flex mt-4'>
                     {orderOption.map((item, index) => (
                         <div
-                            className={`w-1/4 pb-4 flex flex-col items-center hover:text-red-700 cursor-pointer ${currentOption === item.name ? 'border-b-2 border-red-700 text-red-700' : ''}`}
+                            className={`w-1/4 pb-4 flex flex-col items-center text-center hover:text-red-700 cursor-pointer ${currentOption === item.name ? 'border-b-2 border-red-700 text-red-700' : ''}`}
                             key={index}
                             onClick={() => setCurrentOption(item.name)}
                         >
@@ -80,11 +80,11 @@ const Orders = observer(() => {
 
                         >
                             <div
-                                className='flex justify-between pb-6 cursor-pointer'
+                                className='md:flex justify-between md:pb-6 cursor-pointer'
                                 onClick={() => { router.push(`/customer/orders/${order._id}`) }}
                             >
-                                <div className='space-x-2'>
-                                    <span className='text-blue-500'>#{order._id}</span>
+                                <div className='md:space-x-2'>
+                                    <span className='text-blue-500 block md:inline-block'>#{order._id}</span>
                                     {order.trangThaiDon === 'Chờ xác nhận' && <Order_Status_Confirm />}
                                     {order.trangThaiDon === 'Đã xác nhận' && <Order_Status_Confirmed />}
                                     {order.trangThaiDon === 'Hoàn thành' && <Order_Status_Completed />}
@@ -95,11 +95,11 @@ const Orders = observer(() => {
                                 </div>
                             </div>
 
-                            <div className='flex justify-between items-end pt-2 pb-4 border-t-2'>
+                            <div className='md:flex justify-between items-end pt-2 pb-4 border-t-2'>
                                 <div>
                                     <span>{order.soLuong || 0} sản phẩm</span>
                                 </div>
-                                <div className='flex flex-col items-end'>
+                                <div className='flex flex-col md:items-end'>
                                     <p>Tổng tiền:
                                         <span className='ml-2 font-bold'>
                                             {(order.tongTien + (deliveryList.find((item) => order.ptVanChuyen === item.name)?.price || 0)).toLocaleString()}₫
