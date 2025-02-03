@@ -128,7 +128,7 @@ const ProfilePage = observer(() => {
                         text='Họ đệm'
                         placeholder='Nhập họ đệm'
                         id='hoDem'
-                        value={form.hoDem}
+                        value={form.hoDem || ''}
                         onChange={handleChange}
                     />
 
@@ -139,20 +139,20 @@ const ProfilePage = observer(() => {
                         text='Tên'
                         placeholder='Nhập tên'
                         id='ten'
-                        value={form.ten}
+                        value={form.ten || ''}
                         onChange={handleChange}
                     />
 
                     {errors.ten && (<p className="text-red-700 text-sm mt-1 text-center">{errors.ten}</p>)}
 
-                    <div className="mt-4 mb-2 text-sm flex items-center">
-                        <label htmlFor='username' className="w-1/5 block pl-1 font-medium">
+                    <div className="mt-4 mb-2 text-sm md:flex items-center">
+                        <label htmlFor='username' className="md:w-1/5 w-full block pl-1 font-medium">
                             Tên đăng nhập
                         </label>
                         <input
                             type='text'
                             id='username'
-                            value={userStore?.user?.userName}
+                            value={userStore?.user?.userName || ''}
                             className="block px-4 w-2/3 h-10 rounded border shadow-sm bg-gray-200"
                             required
                             disabled
@@ -164,7 +164,7 @@ const ProfilePage = observer(() => {
                         text='Số điện thoại'
                         placeholder='Nhập số điện thoại'
                         id='sdt'
-                        value={form.sdt}
+                        value={form.sdt || ''}
                         onChange={handleChange}
                     />
 
@@ -175,11 +175,11 @@ const ProfilePage = observer(() => {
                         text='Email'
                         placeholder='Nhập email'
                         id='email'
-                        value={form.email}
+                        value={form.email || ''}
                         onChange={handleChange}
                     />
 
-                    <div className="mt-4 mb-2 text-sm flex items-center">
+                    <div className="mt-4 mb-2 text-sm md:flex items-center">
                         <label className="w-1/5 block pl-1 font-medium">
                             Giới tính
                         </label>

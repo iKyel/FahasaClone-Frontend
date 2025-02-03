@@ -65,9 +65,9 @@ const Login = () => {
                 onChange={handleChange}
             />
 
-            <div className='flex justify-end'>
+            {/* <div className='flex justify-end'>
                 <span className='py-2 text-red-700 text-sm'>Quên mật khẩu?</span>
-            </div>
+            </div> */}
 
             <Button_Submit_Form
                 text='Đăng nhập'

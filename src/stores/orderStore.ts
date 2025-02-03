@@ -42,7 +42,7 @@ class OrderStore {
             }
 
         } catch (error) {
-            console.error("Lỗi xem giỏ hàng", error);
+            // console.error("Lỗi xem giỏ hàng", error);
             if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
                 return error.response.data;
             }

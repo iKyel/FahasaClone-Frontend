@@ -14,7 +14,7 @@ const Login_Signin: React.FC = () => {
 
     return (
         <div className="p-10 rounded flex justify-center bg-white">
-            <div className="w-2/5 p-5">
+            <div className="md:w-2/5 p-5">
                 <Login_Signin_Nav handleNav={handleNav} isLogin={isLogin} />
 
                 {isLogin ? (

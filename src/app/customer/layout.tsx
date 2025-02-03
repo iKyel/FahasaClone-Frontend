@@ -7,9 +7,9 @@ interface ContainerProps {
 
 const Layout_Customer: React.FC<ContainerProps> = ({ children }) => {
     return (
-        <div className="flex">
+        <div className="md:flex">
             <Sidebar />
-            <div className='w-3/4'>
+            <div className='md:w-3/4 md:mt-0 mt-4 w-full'>
                 {children}
             </div>
 

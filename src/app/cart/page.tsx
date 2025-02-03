@@ -91,15 +91,15 @@ const Cart = observer(() => {
         <>
             {isClient && (
                 <div className='my-2'>
-                    <h1 className='text-xl my-4 flex items-center text-center'>
+                    <h1 className='text-xl ml-2 md:ml-0 my-4 flex items-center text-center'>
                         GIỎ HÀNG
                         <span className='ml-1 text-base'>
                             ({orderDetailStore?.cartDetail?.length} sản phẩm)
                         </span>
                     </h1>
 
-                    <div className='flex items-start'>
-                        <div className='w-2/3 mr-4'>
+                    <div className='md:flex items-start'>
+                        <div className='md:w-2/3 w-full mr-4'>
                             <Table_Header_Row
                                 quantity={orderDetailStore?.cartDetail?.length}
                                 selectAll={selectAll}
@@ -118,7 +118,7 @@ const Cart = observer(() => {
                             }
                         </div>
 
-                        <div className='w-1/3 p-4 bg-white rounded-lg sticky top-0'>
+                        <div className='md:w-1/3 md:mt-0 mt-2 w-full p-4 bg-white rounded-lg sticky top-0'>
                             <Cart_Payment_Button
                                 totalPrice={orderStore?.cart?.tongTien || 0}
                             />

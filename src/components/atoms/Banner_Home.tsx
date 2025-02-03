@@ -16,7 +16,7 @@ const Banner_Home = () => {
     return (
         <div>
             <div className='flex space-x-2'>
-                <div className='w-2/3'>
+                <div className='w-full md:w-2/3'>
                     <Swiper
                         modules={[Autoplay]}
                         spaceBetween={10}
@@ -40,7 +40,7 @@ const Banner_Home = () => {
                     </Swiper>
                 </div>
 
-                <div className='w-1/3 flex flex-col space-y-2'>
+                <div className='hidden w-1/3 md:flex flex-col space-y-2 '>
                     <div>
                         <img src="/images/banner/UuDai_T1_392x156.jpg"
                             alt=""
@@ -58,7 +58,7 @@ const Banner_Home = () => {
                 </div>
             </div>
 
-            <div className='space-y-2 flex mt-4'>
+            <div className='hidden md:flex mt-4 items-center justify-between'>
                 <div>
                     <img
                         src="/images/banner/LDPCTT1_flashsale_resize_310x210_2.png"

@@ -27,13 +27,18 @@ const Table_Header_Row: React.FC<MyComponentProps> = ({ quantity, selectAll, han
                 </p>
               </div>
             </th>
-            <th className="w-1/12 text-center font-thin">
+
+            <th className="hidden md:table-cell w-1/12 md:text-center font-thin">
               Số lượng
             </th>
-            <th className="w-1/6 text-center font-thin" >
+
+            <th className="hidden md:table-cell w-1/6 text-center font-thin">
               Thành tiền
             </th>
-            <th className="w-1/12 text-center font-thin"></th>
+
+            <th className="hidden md:table-cell w-1/12 text-center font-thin">
+            </th>
+
           </tr>
         </thead>
       </table>

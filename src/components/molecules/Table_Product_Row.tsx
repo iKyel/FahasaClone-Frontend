@@ -14,7 +14,7 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
     const router = useRouter();
     return (
         <div className='p-2 rounded-lg bg-white'>
-            <table className="w-full text-left">
+            <table className="w-full text-left hidden md:block">
                 <tbody className="">
                     {products.map((product, index) => (
                         <tr
@@ -33,7 +33,7 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                                                     type="checkbox"
                                                     checked={product.daChon}
                                                     onChange={() => handleSelectProduct(product._id)}
-                                                    className="w-5 h-5 mx-3 "
+                                                    className="w-5 h-5 mx-auto"
                                                 />
                                             )}
                                         </div>
@@ -45,9 +45,6 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                                                 onClick={() => router.push(`/products/${product.sanPhamId}`)}
                                             />
                                         </div>
-
-
-
                                     </div>
 
                                     <div
@@ -67,6 +64,7 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                                     </div>
                                 </div>
                             </td>
+
                             <td
                                 className={`w-1/12 ${products && index === products.length - 1 ? "border-b-0" : "border-b-2"
                                     }`}
@@ -79,12 +77,14 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                                     />
                                 )}
                             </td>
+
                             <td
                                 className={`w-1/6 text-red-700 font-bold ${products && index === products.length - 1 ? "border-b-0" : "border-b-2"
                                     }`}
                             >
                                 {product.thanhTien.toLocaleString()}₫
                             </td>
+
                             <td
                                 className={`w-1/12 ${products && index === products.length - 1 ? "border-b-0" : "border-b-2"
                                     }`}
@@ -100,6 +100,67 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                     ))}
                 </tbody>
             </table>
+
+            {/* Dưới md: Hiển thị dạng grid 2 sản phẩm một hàng */}
+            <div className="md:hidden">
+                {products.map((product, index) => (
+                    <div key={index} className="p-4 rounded-lg flex flex-col">
+                        <div className="flex">
+                            <div className='w-1/3 flex items-center'>
+                                <div className='w-1/4'>
+                                    {product.soLuong !== 0 && (
+                                        <input
+                                            type="checkbox"
+                                            checked={product.daChon}
+                                            onChange={() => handleSelectProduct(product._id)}
+                                            className="w-5 h-5 mx-auto"
+                                        />
+                                    )}
+                                </div>
+                                <div className='w-3/4'>
+                                    <img
+                                        src={product.imageUrl}
+                                        alt={product.tenSP}
+                                        className="w-32 h-32 object-contain cursor-pointer"
+                                        onClick={() => router.push(`/products/${product.sanPhamId}`)}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='w-2/3 md:px-4 flex flex-col justify-between items-start text-start cursor-pointer'
+                                onClick={() => router.push(`/products/${product.sanPhamId}`)}
+                            >
+                                <span>{product.tenSP.length > 50 ? product.tenSP.slice(0, 50) + '...' : product.tenSP}</span>
+                                <div>
+                                    {product.soLuongTon === 0 && <p className='text-sm text-red-700'>*Sản phẩm này đã hết hàng</p>}
+                                    <span className='font-bold mr-2'>{Math.round(product.giaBan * (1 - (product.khuyenMai || 0) / 100)).toLocaleString()}₫</span>
+                                    {product.khuyenMai > 0 && <span className='text-gray-500 line-through'>{product.giaBan.toLocaleString()}₫</span>}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end mt-2">
+                            <div className='flex items-center w-2/3'>
+                                <Setting_Number_Of_Products_Cart
+                                    selectedQuantity={product.soLuong}
+                                    productId={product._id}
+                                    handleChange={handleUpdateProduct}
+                                />
+
+                                <div className='w-1/2 flex justify-around items-center'>
+                                    <span className="text-red-700 font-bold">{product.thanhTien.toLocaleString()}₫</span>
+                                    <i
+                                        onClick={() => handleDeleteProduct(product._id)}
+                                        className="fa-regular fa-trash-can fa-lg ml-1 cursor-pointer"
+                                    ></i>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

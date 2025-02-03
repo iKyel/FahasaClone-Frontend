@@ -5,7 +5,7 @@ import Logo from '../atoms/Logo'
 const Footer_Right = () => {
     return (
         <div className='mt-2 md:mt-0 md:pl-10'>
-            <div className='grid gap-4 md:grid-cols-3 md:gap-16'>
+            <div className='grid gap-4 lg:grid-cols-3 grid-cols-2 md:gap-16'>
                 <div>
                     <div className='mb-2'>
                         <h3 className='font-bold text-lg'>DỊCH VỤ</h3>

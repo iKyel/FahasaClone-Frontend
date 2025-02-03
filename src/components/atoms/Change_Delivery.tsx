@@ -30,13 +30,13 @@ const Change_Delivery: React.FC<MyComponentProps> = ({ deliveryList, currentDeli
                     />
                     <div className='flex justify-around mt-4'>
                         <button
-                            className='py-2 px-20 border-2 border-black rounded-lg'
+                            className='py-2 md:px-20 px-10 border-2 border-black rounded-lg'
                             onClick={onClose}
                         >
                             Hủy
                         </button>
                         <button
-                            className={`ml-10 py-2 px-20 rounded-lg text-white ${currentDelivery !== selectedItem ? 'bg-red-700' : 'bg-red-400'}`}
+                            className={`ml-10 py-2 md:px-20 px-10 rounded-lg text-white ${currentDelivery !== selectedItem ? 'bg-red-700' : 'bg-red-400'}`}
                             disabled={currentDelivery === selectedItem}
                             onClick={() => handleSelectDelivery(selectedItem, 'delivery')}
                         >

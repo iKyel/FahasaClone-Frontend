@@ -3,6 +3,7 @@ import axiosInstance from "@/utils/axiosInstance";
 import axios from "axios";
 import { makeAutoObservable, runInAction } from "mobx";
 import nookies from "nookies";
+import { orderStore } from "./orderStore";
 
 
 export interface IUser {
@@ -58,6 +59,7 @@ class UserStore {
                         sameSite: 'strict'
                     });
                 }
+                orderStore.getCart();
                 return response.data;
             }
 
@@ -126,6 +128,7 @@ class UserStore {
                         this.user = response.data.user;
                     })
                 }
+                orderStore.getCart();
                 return response.data;
             }
 

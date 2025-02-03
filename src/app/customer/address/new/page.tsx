@@ -141,7 +141,7 @@ const Create_Address = () => {
 
                 {/* Dropdown cho tỉnh thành, quận huyện, phường xã */}
                 <div className="space-y-4 text-sm">
-                    <div className='mt-4 mb-2 text-sm flex items-center'>
+                    <div className='mt-4 mb-2 text-sm md:flex items-center'>
                         <label className="w-1/5 block pl-1 font-medium">Tỉnh/Thành</label>
                         <select
                             value={selectedProvince || ''}
@@ -158,7 +158,7 @@ const Create_Address = () => {
                         </select>
                     </div>
 
-                    <div className='mt-4 mb-2 text-sm flex items-center'>
+                    <div className='mt-4 mb-2 text-sm md:flex items-center'>
                         <label className="w-1/5 block pl-1 font-medium">Quận/Huyện</label>
                         <select
                             onChange={(e) => handleDistrictChange(e.target.value)}
@@ -176,7 +176,7 @@ const Create_Address = () => {
                         </select>
                     </div>
 
-                    <div className='mt-4 mb-2 text-sm flex items-center'>
+                    <div className='mt-4 mb-2 text-sm md:flex items-center'>
                         <label className="w-1/5 block pl-1 font-medium">Phường/Xã</label>
                         <select
                             onChange={(e) => handleWardChange(e.target.value)}
@@ -195,7 +195,7 @@ const Create_Address = () => {
                     </div>
                 </div>
                 <div className='flex justify-between'>
-                    <a className='mt-8 text-blue-500 text-sm hover:underline' href="/customer/address">Quay lại</a>
+                    <a className='hidden md:block mt-8 text-blue-500 text-sm hover:underline' href="/customer/address">Quay lại</a>
                     <Button_Submit_Form
                         text='Lưu địa chỉ'
                         hasErrors={hasErrors}
