@@ -70,7 +70,7 @@ const NavBar_Mobile = observer(() => {
                     {isClient && (
                         <div className="flex h-[calc(100%-3rem)] overflow-y-auto">
                             {/* Danh sách danh mục bên trái */}
-                            <div className="w-1/6 bg-gray-100">
+                            <div className="w-1/4 bg-gray-100">
                                 <ul>
                                     {categoryStore?.categories?.length ? (
                                         categoryStore.categories.map((category, index) => (
@@ -90,7 +90,7 @@ const NavBar_Mobile = observer(() => {
                             </div>
 
                             {/* Danh sách nhóm sản phẩm bên phải */}
-                            <div className="w-5/6 py-4 px-2 h-full text-start">
+                            <div className="w-3/4 py-4 px-2 h-full text-start">
                                 {categoryStore?.categories?.map(
                                     (category, index) =>
                                         activeCategory === category._id && (
