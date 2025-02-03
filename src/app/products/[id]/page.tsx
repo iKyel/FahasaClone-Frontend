@@ -64,14 +64,14 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
 
     return (
         <div>
-            <div className="flex w-full gap-4 items-start">
+            <div className="md:flex w-full gap-4 items-start">
                 {/* Div bên trái */}
-                <div className="w-2/5 p-4 sticky top-0 bg-white rounded-lg">
+                <div className="md:w-2/5 w-full p-4 md:sticky top-0 bg-white rounded-lg">
                     <div className="w-full h-auto p-2">
                         <img
                             src={productStore?.productDetail?.imageUrl}
                             alt={productStore?.productDetail?.tenSP}
-                            className="w-full h-96 object-contain"
+                            className="w-full h-96 object-contain mx-auto"
                         />
                     </div>
 
@@ -101,7 +101,7 @@ const ProductDetail: React.FC<ProductDetailProps> = observer(({ params }) => {
                 </div>
 
                 {/* Div bên phải */}
-                <div className="w-3/5">
+                <div className="w-full mt-2 md:mt-0 md:w-3/5">
                     <div className="p-4 bg-white rounded-lg">
                         {/* Tiêu đề sản phẩm */}
                         <h1 className="text-2xl mb-2">{productStore?.productDetail?.tenSP}</h1>

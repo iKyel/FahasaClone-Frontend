@@ -15,11 +15,14 @@ const Check_Order_Again: React.FC<MyComponentProps> = ({ products }) => {
                     className='w-full flex py-2 text-sm border-b-2'
                     onClick={() => router.push(`/products/${product.sanPhamId}`)}
                 >
-                    <div className='w-3/4 cursor-pointer flex'>
+                    <div className='md:w-1/3 cursor-pointer flex'>
                         <img
                             src={product.imageUrl}
                             alt={product.tenSP}
                             className='w-36 h-36 object-contain' />
+                    </div>
+
+                    <div className='md:w-5/12 w-1/2 cursor-pointer'>
                         <p className='ml-2'>{product.tenSP}</p>
                     </div>
 

@@ -33,7 +33,7 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                                                     type="checkbox"
                                                     checked={product.daChon}
                                                     onChange={() => handleSelectProduct(product._id)}
-                                                    className="w-5 h-5 mx-3 "
+                                                    className="w-5 h-5 mx-auto"
                                                 />
                                             )}
                                         </div>
@@ -45,9 +45,6 @@ const Table_Product_Row: React.FC<MyComponentProps> = ({ products, handleSelectP
                                                 onClick={() => router.push(`/products/${product.sanPhamId}`)}
                                             />
                                         </div>
-
-
-
                                     </div>
 
                                     <div

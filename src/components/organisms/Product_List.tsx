@@ -22,7 +22,7 @@ const Product_List: React.FC<ProductListProps> = ({ products }) => {
                                 <img
                                     src={product.imageUrl}
                                     alt={product.tenSP}
-                                    className="w-52 h-52 object-contain"
+                                    className="w-52 h-52 object-contain mx-auto"
                                 />
                                 {/* % Khuyến mãi */}
                                 {product.khuyenMai > 0 && (
