@@ -128,7 +128,7 @@ const ProfilePage = observer(() => {
                         text='Họ đệm'
                         placeholder='Nhập họ đệm'
                         id='hoDem'
-                        value={form.hoDem}
+                        value={form.hoDem || ''}
                         onChange={handleChange}
                     />
 
@@ -139,7 +139,7 @@ const ProfilePage = observer(() => {
                         text='Tên'
                         placeholder='Nhập tên'
                         id='ten'
-                        value={form.ten}
+                        value={form.ten || ''}
                         onChange={handleChange}
                     />
 
@@ -152,7 +152,7 @@ const ProfilePage = observer(() => {
                         <input
                             type='text'
                             id='username'
-                            value={userStore?.user?.userName}
+                            value={userStore?.user?.userName || ''}
                             className="block px-4 w-2/3 h-10 rounded border shadow-sm bg-gray-200"
                             required
                             disabled
@@ -164,7 +164,7 @@ const ProfilePage = observer(() => {
                         text='Số điện thoại'
                         placeholder='Nhập số điện thoại'
                         id='sdt'
-                        value={form.sdt}
+                        value={form.sdt || ''}
                         onChange={handleChange}
                     />
 
@@ -175,7 +175,7 @@ const ProfilePage = observer(() => {
                         text='Email'
                         placeholder='Nhập email'
                         id='email'
-                        value={form.email}
+                        value={form.email || ''}
                         onChange={handleChange}
                     />
 
