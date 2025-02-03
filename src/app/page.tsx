@@ -7,24 +7,24 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 
 const outstanding_list_1 = [
-  { imageUrl: '/images/catehomepage/catehomepage_dochoi.png', name: 'Đồ chơi', categoryId: '6780ee9f29a4815a5e3dc391' },
-  { imageUrl: '/images/catehomepage/catehomepage_dungcuhs.png', name: 'Dụng cụ học sinh', categoryId: '678e108aeba73ca76534e1a6' },
-  { imageUrl: '/images/catehomepage/catehomepage_vanphongpham.png', name: 'Văn phòng phẩm', categoryId: '6780dfc65547812decc05bdf' },
-  { imageUrl: '/images/catehomepage/catehomepage_bachhoaonline.png', name: 'Bách hóa online', categoryId: '678e118deba73ca76534e1b3' },
+  { imageUrl: '/images/catehomepage/catehomepage_dochoi.png', name: 'Đồ chơi', categoryId: '679f26b9cc89f8a3538d64b5' },
+  { imageUrl: '/images/catehomepage/catehomepage_dungcuhs.png', name: 'Dụng cụ học sinh', categoryId: '679f31bc950c2777935e946f' },
+  { imageUrl: '/images/catehomepage/catehomepage_vanphongpham.png', name: 'Văn phòng phẩm', categoryId: '679f26b5cc89f8a3538d64b2' },
+  { imageUrl: '/images/catehomepage/catehomepage_bachhoaonline.png', name: 'Bách hóa online', categoryId: '679f26c1cc89f8a3538d64bb' },
 ]
 
 const outstanding_list_2 = [
-  { imageUrl: '/images/catehomepage/catehomepage_thieunhi .png', name: 'Thiếu nhi', categoryId: '677fc20102c44b15ec07095a' },
-  { imageUrl: '/images/catehomepage/catehomepage_manga.png', name: 'Manga - Comic', categoryId: '677fc23a02c44b15ec070962' },
-  { imageUrl: '/images/catehomepage/catehomepage_ngoaivan.png', name: 'Ngoại văn', categoryId: '677fc22402c44b15ec07095e' },
-  { imageUrl: '/images/catehomepage/catehomepage_tacphamkinhdien.png', name: 'Văn học kinh điển', categoryId: '6780e83429a4815a5e3dc2e8' },
+  { imageUrl: '/images/catehomepage/catehomepage_thieunhi .png', name: 'Thiếu nhi', categoryId: '679f26d5cc89f8a3538d64c1' },
+  { imageUrl: '/images/catehomepage/catehomepage_manga.png', name: 'Manga - Comic', categoryId: '679f26e4cc89f8a3538d64ca' },
+  { imageUrl: '/images/catehomepage/catehomepage_ngoaivan.png', name: 'Ngoại văn', categoryId: '679f26accc89f8a3538d64af' },
+  { imageUrl: '/images/catehomepage/catehomepage_tacphamkinhdien.png', name: 'Văn học kinh điển', categoryId: '679f308c950c2777935e93fd' },
 ]
 
 const outstanding_list_3 = [
-  { imageUrl: '/images/catehomepage/catehomepage_vanhoc.png', name: 'Văn học', categoryId: '677fc22402c44b15ec07095e' },
-  { imageUrl: '/images/catehomepage/catehomepage_kinhte.png', name: 'Kinh tế', categoryId: '677fc25302c44b15ec070966' },
-  { imageUrl: '/images/catehomepage/catehomepage_tamlykinang.png', name: 'Tâm lý kỹ năng', categoryId: '677fc23002c44b15ec070960' },
-  { imageUrl: '/images/catehomepage/catehomepage_ngoaingu.png', name: 'Sách học ngoại ngữ', categoryId: '677fc24902c44b15ec070964' },
+  { imageUrl: '/images/catehomepage/catehomepage_vanhoc.png', name: 'Văn học', categoryId: '679f26dfcc89f8a3538d64c7' },
+  { imageUrl: '/images/catehomepage/catehomepage_kinhte.png', name: 'Kinh tế', categoryId: '679f2701cc89f8a3538d64d7' },
+  { imageUrl: '/images/catehomepage/catehomepage_tamlykinang.png', name: 'Tâm lý kỹ năng', categoryId: '679f26efcc89f8a3538d64cd' },
+  { imageUrl: '/images/catehomepage/catehomepage_ngoaingu.png', name: 'Sách học ngoại ngữ', categoryId: '679f26f6cc89f8a3538d64d0' },
 ]
 
 const Home = observer(() => {
@@ -47,7 +47,7 @@ const Home = observer(() => {
       <Product_List_5_Items
         icon='/images/home/ico_sachtrongnuoc.svg'
         title='Sách Tiếng Việt'
-        categoryId={['679f26a8cc89f8a3538d64ac', '677fc20102c44b15ec07095a', '677fc23002c44b15ec070960']}
+        categoryId={['679f26d5cc89f8a3538d64c1', '679f26d9cc89f8a3538d64c4', '679f26dfcc89f8a3538d64c7']}
       />
 
       <div className='grid grid-cols-2 md:grid-cols-4 gap-2'>
@@ -62,7 +62,7 @@ const Home = observer(() => {
       <Product_List_5_Items
         icon='/images/home/icon_ManngaT06.png'
         title='Manga - Comic'
-        categoryId={['677fc23a02c44b15ec070962', '6780ecf729a4815a5e3dc318', '6780ed0029a4815a5e3dc31b']}
+        categoryId={['679f30af950c2777935e9406', '679f30b8950c2777935e9409', '679f30d8950c2777935e9415']}
       />
 
       <div className='grid grid-cols-2 md:grid-cols-4 gap-2'>
@@ -77,13 +77,13 @@ const Home = observer(() => {
       <Product_List_5_Items
         icon='/images/home/Icon_SachThieuNhi_120x120.png'
         title='Truyện thiếu nhi'
-        categoryId={['677fc2ab02c44b15ec070974', '677fc2b802c44b15ec070976', '677fc2c302c44b15ec070978']}
+        categoryId={['679f2762cc89f8a3538d6543', '679f2766cc89f8a3538d6546', '679f276ecc89f8a3538d6549']}
       />
 
       <Product_List_5_Items
         icon='/images/home/ico_goiy@3x.png'
         title='Làm đẹp - Sức khỏe'
-        categoryId={['6780eea729a4815a5e3dc394', '678e13a7eba73ca76534e2a6']}
+        categoryId={['679f26c8cc89f8a3538d64be']}
       />
 
     </div >
