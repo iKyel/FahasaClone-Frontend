@@ -91,7 +91,7 @@ const Cart = observer(() => {
         <>
             {isClient && (
                 <div className='my-2'>
-                    <h1 className='text-xl my-4 flex items-center text-center'>
+                    <h1 className='text-xl ml-2 md:ml-0 my-4 flex items-center text-center'>
                         GIỎ HÀNG
                         <span className='ml-1 text-base'>
                             ({orderDetailStore?.cartDetail?.length} sản phẩm)

@@ -30,12 +30,12 @@ const Change_Address: React.FC<MyComponentProps> = ({ addressList, currentAddres
                     />
                     <div className='flex justify-around mt-4'>
                         <button
-                            className='py-2 px-20 border-2 border-black rounded-lg'
+                            className='py-2 md:px-20 px-10 border-2 border-black rounded-lg'
                             onClick={onClose}
                         >Hủy
                         </button>
                         <button
-                            className={`ml-4 py-2 px-20 rounded-lg text-white ${currentAddress !== selectedItem ? 'bg-red-700' : 'bg-red-400'}`}
+                            className={`ml-4 py-2 md:px-20 px-10 rounded-lg text-white ${currentAddress !== selectedItem ? 'bg-red-700' : 'bg-red-400'}`}
                             disabled={currentAddress === selectedItem}
                             onClick={() => handleSelectAddress(selectedItem, 'address')}
                         >
