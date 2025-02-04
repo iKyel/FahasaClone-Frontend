@@ -38,6 +38,7 @@ const OneStepCheckout = observer(() => {
         setIsClient(true);
         const fetchData = async () => {
             const result = await orderStore?.getCartSelected();
+            console.log('result', result);
             if (result && result.tongTien) {
                 setTotalPrice(result.tongTien);
             }
@@ -121,7 +122,7 @@ const OneStepCheckout = observer(() => {
 
                     <Layout_OneStepCheckout_Prop text='KIỂM TRA LẠI ĐƠN HÀNG'>
                         <Check_Order_Again
-                            products={orderDetailStore?.cartDetail || []}
+                            products={orderDetailStore?.selectedCartDetail || []}
                         />
                     </Layout_OneStepCheckout_Prop>
 

@@ -16,6 +16,7 @@ export interface IOrderDetail {
 
 class OrderDetailStore {
     cartDetail: IOrderDetail[] | null = null;
+    selectedCartDetail: IOrderDetail[] | null = null;
     orderDetail: IOrderDetail[] | null = null;
 
     constructor() {
@@ -25,6 +26,7 @@ class OrderDetailStore {
     async getCartDetail(cartDetail: any) {
         try {
             if (cartDetail) {
+                console.log('cartDetail', cartDetail);
                 runInAction(() => {
                     this.cartDetail = cartDetail;
                 })
@@ -32,6 +34,23 @@ class OrderDetailStore {
 
         } catch (error) {
             console.error("Lỗi xem chi tiết giỏ hàng", error);
+            if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
+                return error.response.data;
+            }
+        }
+    }
+
+    async getSelectedCartDetail(cartDetail: any) {
+        try {
+            if (cartDetail) {
+                console.log('selectcartDetail', cartDetail);
+                runInAction(() => {
+                    this.selectedCartDetail = cartDetail;
+                })
+            }
+
+        } catch (error) {
+            console.error("Lỗi lấy danh sách sản phẩm đã chọn trong giỏ hàng", error);
             if (axios.isAxiosError(error) && typeof error.response?.data === 'object') {
                 return error.response.data;
             }

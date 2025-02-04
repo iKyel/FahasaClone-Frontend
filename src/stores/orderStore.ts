@@ -52,10 +52,12 @@ class OrderStore {
     async getCartSelected() {
         try {
             const response = await api.get('api/order/getSelectedProduct');
+            console.log(response.data);
 
             if (response.data) {
                 if (response.data.cartDetail) {
-                    await orderDetailStore.getCartDetail(response.data.cartDetail);
+                    console.log('response.data', response.data.cartDetail)
+                    await orderDetailStore.getSelectedCartDetail(response.data.cartDetail);
                 }
                 return response.data;
             }
