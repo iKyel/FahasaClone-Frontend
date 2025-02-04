@@ -45,9 +45,9 @@ const Button_Header: React.FC<MyComponentProps> = observer(({ src, text, style, 
         }
         fetchData();
         setIsClient(true);
-        return () => {
-            ws.close();
-        };
+        // return () => {
+        //     ws.close();
+        // };
     }, [orderDetailStore?.cartDetail?.length]);
 
     const handleButton_Header = () => {
