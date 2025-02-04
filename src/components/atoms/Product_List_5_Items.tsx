@@ -39,7 +39,6 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
 
     const handleNext = () => {
         if (products && currentIndex + ITEMS_PER_PAGE < products.length - ITEMS_PER_PAGE) {
-            console.log(products);
             setCurrentIndex((prevIndex) => prevIndex + ITEMS_PER_PAGE);
         }
         else {

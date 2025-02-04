@@ -18,7 +18,7 @@ const Button_Header: React.FC<MyComponentProps> = observer(({ src, text, style, 
     const orderStore = useOrder();
     const orderDetailStore = useOrderDetail();
 
-    const [numProd, setNumProd] = useState(0);
+    const [numProd, setNumProd] = useState('0');
     const [isClient, setIsClient] = useState(false);
     useEffect(() => {
         const ws = new WebSocket('ws://localhost:3412');
@@ -28,14 +28,14 @@ const Button_Header: React.FC<MyComponentProps> = observer(({ src, text, style, 
 
         ws.onmessage = (event) => {
             if (event.data) {
-                const { numOfProducts } = event.data as unknown as { numOfProducts: number }
-                setNumProd(numOfProducts)
+                const obj = JSON.parse(event.data)
+                setNumProd(obj.numOfProducts)
             }
         }
 
-        ws.onclose = () => {
-            console.log("Disconnected from WebSocket server");
-        };
+        // ws.onclose = () => {
+        //     console.log("Disconnected from WebSocket server");
+        // };
 
         const fetchData = async () => {
             const result = await orderStore?.getCart();
