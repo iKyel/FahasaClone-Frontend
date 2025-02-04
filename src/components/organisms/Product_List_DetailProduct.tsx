@@ -13,7 +13,7 @@ const Product_List_DetailProduct: React.FC<ProductListProps> = ({ products }) =>
         <div>
             {products && products.length > 0
                 ? (
-                    <div className='grid grid-cols-5 gap-2'>
+                    <div className='grid md:grid-cols-5 grid-cols-2 gap-2'>
                         {products.map((product, index) => (
                             <div
                                 key={index}

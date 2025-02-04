@@ -3,6 +3,7 @@ import Pagination from '@/components/molecules/Pagination';
 import Product_List_DetailProduct from '@/components/organisms/Product_List_DetailProduct';
 import { ListValue } from '@/components/organisms/SlideBar_Product';
 import { useProduct } from '@/contexts/AppContext';
+import scrollToTop from '@/utils/scroll_To_Top';
 import { observer } from 'mobx-react-lite';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -29,6 +30,7 @@ const SearchProduct = observer(() => {
         //Cập nhật query trang
         if (filter.page) currentParams.set('pageNum', filter.page);
 
+        scrollToTop();
         router.replace(`?${currentParams.toString()}`);
     };
 
