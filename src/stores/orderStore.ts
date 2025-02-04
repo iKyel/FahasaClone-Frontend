@@ -172,6 +172,7 @@ class OrderStore {
             const response = await api.post('/api/order/createPaymentOrder', { diaChi, ptVanChuyen, ptThanhToan, ghiChu });
 
             if (response.data) {
+                orderStore.getCart();
                 return response.data;
             }
 
