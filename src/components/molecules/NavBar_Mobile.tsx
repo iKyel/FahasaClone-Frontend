@@ -11,7 +11,7 @@ const NavBar_Mobile = observer(() => {
 
     const [isClient, setIsClient] = useState(false);
     const [isNavOpen, setIsNavOpen] = useState(false);
-    const [activeCategory, setActiveCategory] = useState<string | null>(categoryStore?.categories?.[0]._id || null);
+    const [activeCategory, setActiveCategory] = useState<string | null>(categoryStore?.categories?.[0] ? categoryStore?.categories?.[0]._id : null);
     const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
 
     useEffect(() => {

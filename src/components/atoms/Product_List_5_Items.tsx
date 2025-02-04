@@ -18,6 +18,9 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
     const [categories, setCategories] = useState<ICategory[]>([]);
     const [selectedCat, setSelectedCat] = useState(categoryId[0]);
 
+    const ITEMS_PER_PAGE = typeof window !== "undefined" && window.innerWidth >= 768 ? 5 : 2;
+    const [currentIndex, setCurrentIndex] = useState(0);
+
     useEffect(() => {
         const fetchData = async () => {
             const result_cat = await Promise.all(categoryId.map((item) => categoryStore?.getCategoriesById(item)));
@@ -33,13 +36,8 @@ const Product_List_5_Items: React.FC<MyComponentProps> = ({ categoryId, title, i
         fetchData();
     }, [selectedCat]);
 
-    const ITEMS_PER_PAGE = typeof window !== "undefined" && window.innerWidth >= 768 ? 5 : 2;
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-
     const handleNext = () => {
         if (products && currentIndex + ITEMS_PER_PAGE < products.length - ITEMS_PER_PAGE) {
-            console.log(products);
             setCurrentIndex((prevIndex) => prevIndex + ITEMS_PER_PAGE);
         }
         else {
